@@ -1,0 +1,23 @@
+{
+  "name": "deepstream.io-client-specs",
+  "version": "0.0.1",
+  "description": "A suite of Gherkin specs to ensure protocol support of clients",
+  "main": "index.js",
+  "scripts": {
+    "test": " node ./node_modules/cucumber/bin/cucumber.js --require ./step-definitions-server/step-definition-server.js --require ./step-definitions-client/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://wolframhempel:arbiter27002837@github.com/hoxton-one/deepstream.io-client-specs.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hoxton-one/deepstream.io-client-specs/issues"
+  },
+  "homepage": "https://github.com/hoxton-one/deepstream.io-client-specs#readme",
+  "devDependencies": {
+    "cucumber": "^0.9.2",
+    "deepstream.io-client-js": "latest"
+  }
+}

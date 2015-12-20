@@ -1,6 +1,8 @@
-exports.check = function( type, expected, actual, callback ) {
+exports.check = function( type, expected, actual, callback, dontCallbackOnSuccess ) {
 	if( expected === actual ) {
-		callback();
+		if( dontCallbackOnSuccess !== true ) {
+			callback();
+		}
 	} else {
 		callback( new Error( 'Expected ' + type + ' to be ' + expected + ', but it was ' + actual ) );
 	}

@@ -8,6 +8,7 @@ server.on( 'connection', bindSocket );
 server.on( 'listening', onListening );
 server.listen( config.testServerPort, config.testServerHost );
 
+exports.allMessages = [];
 exports.lastMessage = null;
 exports.isReady = false;
 exports.connectionCount = 0;
@@ -38,6 +39,7 @@ function onDisconnect() {
 
 function onIncomingMessage( message ) {
 	exports.lastMessage = message;
+	exports.allMessages.push( message );
 }
 
 function onListening() {

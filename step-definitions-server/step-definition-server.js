@@ -35,7 +35,18 @@ module.exports = function() {
 	});
 
 	this.Then( /^the server received the message (.*)$/, function( message, callback ){
-		check( 'last received message', message, convertChars( server.lastMessage ), callback );
+		if( message.indexOf( '<UID>' ) === -1 ) {
+			check( 'last received message', message, convertChars( server.lastMessage ), callback );
+		} else {
+			message = message.replace( /\|/g, '\\|' );
+			message = message.replace( '+', '\\+' );
+			message = message.replace( '<UID>', '.*' );
+			if( (new RegExp( message ) ).test( convertChars( server.lastMessage ) ) ) {
+				callback();
+			} else {
+				callback( new Error( convertChars( server.lastMessage ) + ' did not match ' + message ) );
+			}
+		}
 	});
 
 	this.Then( /^the server has received (\d*) messages$/, function( numberOfMessages, callback ) {

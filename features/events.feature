@@ -5,7 +5,7 @@ Feature: Events
 Scenario: The client is connected
 	Given the test server is ready
 		And the client is initialised
-	When the client logs in with username XXX and password YYY
+		And the client logs in with username XXX and password YYY
 		And the server sends the message A|A+
 
 # Happy Path
@@ -24,12 +24,18 @@ Scenario: The client receives another event
 	When the server sends the message E|EVT|test1|SanotherValue+
 	Then the client received the event test1 with data anotherValue
 
+Scenario: The client publishes an event
+	When the client publishes an event named test1 with data yetAnotherValue
+	Then the server received the message E|EVT|test1|SyetAnotherValue+
+
 Scenario: The client unsubscribes from an event
 	When the client unsubscribes from an event named test1
 	Then the server received the message E|US|test1+
 
 Scenario: The server sends an ACK message for test1 unsubscribe
 	Given the server sends the message E|A|US|test1+
+
+#TODO Listen
 
 # Other
 Scenario: The client attempts to subscribe to the same event multiple times. This should still

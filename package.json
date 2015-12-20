@@ -4,7 +4,7 @@
   "description": "A suite of Gherkin specs to ensure protocol support of clients",
   "main": "index.js",
   "scripts": {
-    "test": " node ./node_modules/cucumber/bin/cucumber.js --require ./step-definitions-server/step-definition-server.js --require ./step-definitions-client/"
+    "test": " node ./node_modules/cucumber/bin/cucumber.js --require ./step-definitions-server/step-definition-server.js --require ./step-definitions-client/ --fail-fast"
   },
   "repository": {
     "type": "git",

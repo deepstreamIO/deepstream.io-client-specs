@@ -38,22 +38,12 @@ module.exports = function() {
 	});
 
 	this.Then( /^the client throws a (\w*) error with message (.*)$/, function( error, errorMessage, callback ){
-		if( error !== lastErrorArgs[ 1 ] ) {
-			callback( new Error( 'Expected last error to be ' + error + ', but it was ' + lastErrorArgs[ 1 ] ) );
-		} else if( errorMessage !== lastErrorArgs[ 0 ] ) {
-			callback( new Error( 'Expected last error message to be ' + errorMessage + ', but it was ' + lastErrorArgs[ 0 ] ) );
-		} else {
-			callback();
-		}
+		check( 'last error', error, lastErrorArgs[ 1 ], callback, true );
+		check( 'last error message', errorMessage, lastErrorArgs[ 0 ], callback );
 	});
 
 	this.Then( /^the last login failed with error (\w*) and message (.*)$/, function( error, errorMessage, callback ){
-		if( error !== lastAuthArgs[ 1 ] ) {
-			callback( new Error( 'Expected last auth error to be ' + error + ', but it was ' + lastAuthArgs[ 1 ] ) );
-		} else if( errorMessage !== lastAuthArgs[ 2 ] ) {
-			callback( new Error( 'Expected last auth error message to be ' + errorMessage + ', but it was ' + lastAuthArgs[ 2 ] ) );
-		} else {
-			callback();
-		}
+		check( 'last auth error', error, lastAuthArgs[ 1 ], callback, true );
+		check( 'last auth error message', errorMessage, lastAuthArgs[ 2 ], callback );
 	});
 };

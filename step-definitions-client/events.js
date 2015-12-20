@@ -17,6 +17,11 @@ module.exports = function() {
 		setTimeout( callback, config.tcpMessageWaitTime );
 	});
 
+	this.When( /^the client publishes an event named (\w*) with data (\w*)$/, function( eventName, eventData, callback ){
+		global.dsClient.event.emit( eventName, eventData );
+		setTimeout( callback, config.tcpMessageWaitTime );
+	});
+	
 	this.Then( /^the client received the event (\w*) with data (\w*)$/, function(eventName, eventData, callback ){
 		check( 'last event name', eventName, lastEventName, callback, true );
 		check( 'last event data', eventData, lastEventData, callback );

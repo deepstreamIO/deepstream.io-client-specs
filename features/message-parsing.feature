@@ -5,7 +5,7 @@ Feature: Parsing Messages
 Background:
 	Given the test server is ready
 		And the client is initialised
-	When the client logs in with username XXX and password YYY
+		And the client logs in with username XXX and password YYY
 		And the server sends the message A|A+
 
 Scenario: The client receives a message with too few parts

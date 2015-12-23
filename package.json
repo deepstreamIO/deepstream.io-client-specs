@@ -19,5 +19,8 @@
   "devDependencies": {
     "cucumber": "^0.9.2",
     "deepstream.io-client-js": "latest"
+  },
+  "dependencies": {
+    "sinon": "^1.17.2"
   }
 }

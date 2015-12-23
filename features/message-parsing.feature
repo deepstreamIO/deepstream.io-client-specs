@@ -1,3 +1,4 @@
+@parsing
 Feature: Parsing Messages
 	Every message from that's received from the server is validated for some basic
 	syntactic and semantic criteria

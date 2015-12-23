@@ -1,3 +1,4 @@
+@connectivity
 Feature: Logging In
 	As soon as the client is initialised, it creates a connection with the server. However the connection is initially in
 	a quarantine state until it sends an authentication message. The auth message (A|REQ|<JSON authData>) must always be the first message send by

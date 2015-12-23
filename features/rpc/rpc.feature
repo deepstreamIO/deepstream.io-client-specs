@@ -1,3 +1,4 @@
+@rpc
 Feature: Receiving RPCS
 	Remote Procedure Calls are deepstream's concept of request-response communication. This requires
 	a client that makes the RPC (requestor or receiver) and another client that answers it (provider)

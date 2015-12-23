@@ -1,3 +1,4 @@
+@events
 Feature: Events
 	Events are deepstream's publish-subscribe pattern. Everytime a client subscribes to
 	or unsubscribes from an event the server replies with an acknowledgment message

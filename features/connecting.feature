@@ -1,3 +1,4 @@
+@connectivity
 Feature: Connecting a client
 	As soon as the client is instantiated
 	it establishes a TCP connection to the

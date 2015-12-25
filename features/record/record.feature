@@ -11,11 +11,11 @@ Scenario: The client creates a record
 	Given the client creates a record named "test1"
 	Then the server received the message R|CR|test1+
 
-Scenario: The server sends an create ACK message for test1
+Scenario: The server sends a read ACK message for test1
 	Given the server sends the message R|A|CR|test1+
 
 Scenario: The client receives the initial record data
-	When the server sends the message R|U|test1|100|{"name":"John", "pets": [{"name":"Ruffles", "type":"dog","age":2}]}+
+	When the server sends the message R|R|test1|100|{"name":"John", "pets": [{"name":"Ruffles", "type":"dog","age":2}]}+
 	Then the client record "test1" data is {"name":"John", "pets": [{"name":"Ruffles", "type":"dog","age":2}]}
 
 Scenario: The client receives an partial update
@@ -23,8 +23,22 @@ Scenario: The client receives an partial update
 	Then the client record "test1" data is {"name":"John", "pets": [{"name":"Ruffles", "type":"dog","age":3}]}
 
 Scenario: The client receives a full update
-	When the server sends the message R|U|test1|102|{"name":"Smith", "pets": [{"name":"Ruffus", "type":"dog","age":1}]}+
-	Then the client record "test1" data is {"name":"Smith", "pets": [{"name":"Ruffus", "type":"dog","age":1}]}
+	When the server sends the message R|U|test1|102|{"name":"Smith", "pets": [{"name":"Ruffus", "type":"dog","age":4}]}+
+	Then the client record "test1" data is {"name":"Smith", "pets": [{"name":"Ruffus", "type":"dog","age":4}]}
+
+Scenario: The client sends an partial update
+	When the client sets the record "test1" "pets.0.name" to "Max"
+	Then the server received the message R|P|test1|103|pets.0.name|SMax+
+
+Scenario: The server sends a write ACK message for test1
+	Given the server sends the message R|A|P|test1+
+
+Scenario: The client receives a full update
+	When the client sets the record "test1" to {"name":"Smith","pets":[{"name":"Ruffus","type":"dog","age":5}]}
+	Then the server received the message R|U|test1|104|{"name":"Smith","pets":[{"name":"Ruffus","type":"dog","age":5}]}+
+
+Scenario: The server sends a write ACK message for test1
+	Given the server sends the message R|A|U|test1+
 
 Scenario: The client discards the record
 	When the client discards the record named "test1"

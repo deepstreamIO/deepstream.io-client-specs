@@ -10,7 +10,9 @@ module.exports = function() {
 			global.dsClient.close();
 		}
 		global.dsClient = deepstream( config.testServerHost + ':' + config.testServerPort, {
-			subscriptionTimeout: 60
+			subscriptionTimeout: 60,
+			recordReadAckTimeout: 60,
+			recordReadTimeout: 260
 		});
 		global.dsClient.on( 'error', function(){
 			lastErrorArgs = arguments;

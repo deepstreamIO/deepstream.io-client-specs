@@ -2,27 +2,38 @@ var sinon = require( 'sinon' );
 var config = require( '../config' );
 var check = require( '../helper/helper' ).check;
 
-var record;
+var records = {};
 var subscribeCallback = sinon.spy();
 var listenCallback = sinon.spy();
 
 module.exports = function() {
+
 	this.When(/^the client creates a record named "([^"]*)"$/, function (recordName, callback) {
-		record = global.dsClient.record.getRecord( recordName );
+		records[ recordName ] = global.dsClient.record.getRecord( recordName );
 		setTimeout( callback, config.tcpMessageWaitTime );
 	});
 
+	this.When(/^the client sets the record "([^"]*)" "([^"]*)" to "(.+)"$/, function (recordName, path, value, callback) {
+	  records[ recordName ].set( path, value );
+	  setTimeout( callback, config.tcpMessageWaitTime );
+	});
+
+	this.When(/^the client sets the record "([^"]*)" to (.+)$/, function (recordName, value, callback) {
+	  records[ recordName ].set( JSON.parse( value ) );
+	  setTimeout( callback, config.tcpMessageWaitTime );
+	});
+
 	this.Then(/^the client record "([^"]*)" data is (.*)$/, function (recordName, data, callback) {
-		check( 'record data', record.get(), JSON.parse( data ), callback );
+		check( 'record data', records[ recordName ].get(), JSON.parse( data ), callback );
 	});
 
 	this.When(/^the client discards the record named "([^"]*)"$/, function (recordName, callback) {
-		record.discard();
+		records[ recordName ].discard();
 		setTimeout( callback, config.tcpMessageWaitTime );
 	});
 
 	this.When(/^the client deletes the record named "([^"]*)"$/, function (recordName, callback) {
-	 	record.delete();
+	 	records[ recordName ].delete();
 		setTimeout( callback, config.tcpMessageWaitTime );
 	});
 
@@ -53,25 +64,25 @@ module.exports = function() {
 	*/
 	this.When(/^the client subscribes to "([^"]*)" for the record "([^"]*)"$/, function (path, recordName, callback) {
 	  	subscribeCallback.reset();
-	  	record.subscribe( path, subscribeCallback );
+	  	records[ recordName ].subscribe( path, subscribeCallback );
 		setTimeout( callback, config.tcpMessageWaitTime );
 	});
 
 	this.When(/^the client unsubscribes to the entire record "([^"]*)" changes$/, function (recordName, callback) {
 	  	subscribeCallback.reset();
-	  	record.unsubscribe( subscribeCallback );
+	  	records[ recordName ].unsubscribe( subscribeCallback );
 		setTimeout( callback, config.tcpMessageWaitTime );
 	});
 
 	this.When(/^the client unsubscribes to "([^"]*)" for the record "([^"]*)"$/, function (path, recordName, callback) {
 	  	subscribeCallback.reset();
-	  	record.unsubscribe( path, subscribeCallback );
+	  	records[ recordName ].unsubscribe( path, subscribeCallback );
 		setTimeout( callback, config.tcpMessageWaitTime );
 	});
 
 	this.When(/^the client subscribes to the entire record "([^"]*)" changes$/, function (recordName, callback) {
 		subscribeCallback.reset();
-	  	record.subscribe( subscribeCallback );
+	  	records[ recordName ].subscribe( subscribeCallback );
 		setTimeout( callback, config.tcpMessageWaitTime );
 	});
 

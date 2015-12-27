@@ -14,6 +14,12 @@ Scenario: The client subscribes to an event
 	Given the client subscribes to an event named test1
 	Then the server received the message E|S|test1+
 
+@timeout
+Scenario: The server does not respond in time with an ACK
+	Given the server resets its message count
+		And some time passes
+	Then the client throws a ACK_TIMEOUT error with message test1
+
 Scenario: The server sends an ACK message for test1
 	Given the server sends the message E|A|S|test1+
 

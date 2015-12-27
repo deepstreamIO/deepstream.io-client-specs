@@ -36,8 +36,6 @@ Scenario: The client unsubscribes from an event
 Scenario: The server sends an ACK message for test1 unsubscribe
 	Given the server sends the message E|A|US|test1+
 
-#TODO Listen
-
 # Other
 Scenario: The client attempts to subscribe to the same event multiple times. This should still
 			only trigger a single subscribe message to the server and the incoming events should

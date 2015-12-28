@@ -8,7 +8,7 @@ Scenario: The client sends login credentials
 	Given the test server is ready
 		And the client is initialised
 	When the client logs in with username XXX and password YYY
-	Then the server received the message A|REQ|{"username":"XXX","password":"YYY"}+
+	Then the last message the server recieved is A|REQ|{"username":"XXX","password":"YYY"}+
 		And the clients connection state is AUTHENTICATING
 
 Scenario: The client receives a login confirmation

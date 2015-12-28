@@ -12,7 +12,7 @@ Scenario: The client is connected
 # Requestor
 Scenario: The client makes an RPC
 	When the client requests RPC toUppercase with data abc
-	Then the server received the message P|REQ|toUppercase|<UID>|Sabc+
+	Then the last message the server recieved is P|REQ|toUppercase|<UID>|Sabc+
 
 Scenario: The client receives a Response
 	

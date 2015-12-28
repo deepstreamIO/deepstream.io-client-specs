@@ -27,7 +27,7 @@ Scenario: The server then recieves the initial record data
 
 Scenario: The client sends an partial update
 	When the client sets the record "unhappyRecord" to {"reasons":["Just Because."]}
-	Then the server received the message R|U|unhappyRecord|101|{"reasons":["Just Because."]}+
+	Then the last message the server recieved is R|U|unhappyRecord|101|{"reasons":["Just Because."]}+
 
 @timeout
 Scenario: The server does not respond in time with an ACK
@@ -50,7 +50,7 @@ Scenario: The server send a storage retrieval timeout
 
 Scenario: The client discards record
 	When the client discards the record named "unhappyRecord"
-	Then the server received the message R|US|unhappyRecord+
+	Then the last message the server recieved is R|US|unhappyRecord+
 
 @timeout
 Scenario: The server does not respond in time with an ACK
@@ -63,7 +63,7 @@ Scenario: The client deletes the record
 		And the server sends the message R|A|CR|unhappyRecord+
 		And the server sends the message R|R|unhappyRecord|100|{"reasons":["Because."]}+
 	When the client deletes the record named "unhappyRecord"
-	Then the server received the message R|D|unhappyRecord+
+	Then the last message the server recieved is R|D|unhappyRecord+
 
 @timeout
 Scenario: The server does not recieve an ack

@@ -1,4 +1,4 @@
-@events
+@records
 Feature: Record Subscription
 
 Scenario: The client is connected
@@ -9,7 +9,7 @@ Scenario: The client is connected
 
 Scenario: The client creates a record
 	When the client creates a record named "test1"
-	Then the server received the message R|CR|test1+
+	Then the last message the server recieved is R|CR|test1+
 
 Scenario: The server responds with an ack and the initial read
 	When the server sends the message R|A|CR|test1+

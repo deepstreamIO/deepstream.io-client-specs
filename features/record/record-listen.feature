@@ -9,7 +9,7 @@ Scenario: The client is connected
 
 Scenario: The client listens to recordPrefix
 	When the client listens to a record matching "recordPrefix/.*"
-	Then the server received the message R|L|recordPrefix/.*+
+	Then the last message the server recieved is R|L|recordPrefix/.*+
 
 @timeout
 Scenario: The server does not respond in time with an ACK
@@ -29,7 +29,7 @@ Scenario: The client gets notified for removed subscriptions
 
 Scenario: The client unlistens to recordPrefix
 	When the client unlistens to a record matching "recordPrefix/.*"
-	Then the server received the message R|UL|recordPrefix/.*+
+	Then the last message the server recieved is R|UL|recordPrefix/.*+
 
 @timeout
 Scenario: The server does not respond in time with an ACK

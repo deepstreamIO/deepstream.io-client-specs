@@ -9,7 +9,7 @@ Scenario: The client is connected
 
 Scenario: The client listens to eventPrefix
 	When the client listens to events matching "eventPrefix/.*"
-	Then the server received the message E|L|eventPrefix/.*+
+	Then the last message the server recieved is E|L|eventPrefix/.*+
 
 @timeout
 Scenario: The server does not respond in time with an ACK
@@ -29,7 +29,7 @@ Scenario: The client gets notified for removed subscriptions
 
 Scenario: The client unlistens to eventPrefix
 	When the client unlistens to events matching "eventPrefix/.*"
-	Then the server received the message E|UL|eventPrefix/.*+
+	Then the last message the server recieved is E|UL|eventPrefix/.*+
 
 @timeout
 Scenario: The server does not respond in time with an ACK

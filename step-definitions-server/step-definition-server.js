@@ -85,4 +85,8 @@ module.exports = function() {
 		check( 'number of received messages', Number( numberOfMessages ), server.allMessages.length, callback );
 	});
 
+	this.Then(/^the server did not recieve any messages$/, function (callback) {
+	  	check( 'number of received messages', 0, server.allMessages.length, callback );
+	});
+
 };

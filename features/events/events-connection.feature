@@ -14,6 +14,13 @@ Scenario: The client subscribes to an event
 Scenario: The server sends an ACK message for test1
 	Given the server sends the message E|A|S|test1+
 
+Scenario: The client listens to eventPrefix
+	When the client listens to events matching "eventPrefix/.*"
+	Then the last message the server recieved is E|L|eventPrefix/.*+
+
+Scenario: The server sends an ACK message for test1
+	Given the server sends the message E|A|L|eventPrefix/.*+
+
 Scenario: The client loses it connection to the server
 	When the connection to the server is lost
 	Given some time passes
@@ -34,6 +41,9 @@ Scenario: The client is connected
 
 Scenario: The client resends the event subscription
 	Then the server received the message E|S|test1+
+
+Scenario: The client resends the event listen
+	Then the server received the message E|L|test1+
 
 Scenario: The client sends offline events
 	#TODO: Is this actually expected?

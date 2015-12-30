@@ -2,7 +2,7 @@ var deepstream = require( 'deepstream.io-client-js' );
 var config = require( '../config' );
 var check = require( '../helper/helper' ).check;
 var lastAuthArgs;
-var lastErrorArgs;
+var errors = [];
 
 module.exports = function() {
 	this.Given( /^the client is initialised$/, function( callback ){
@@ -15,7 +15,7 @@ module.exports = function() {
 			recordReadTimeout: 260
 		});
 		global.dsClient.on( 'error', function(){
-			lastErrorArgs = arguments;
+			errors.push( arguments );
 		});
 		setTimeout( callback, config.tcpMessageWaitTime );
 	});
@@ -40,6 +40,8 @@ module.exports = function() {
 	});
 
 	this.Then( /^the client throws a (\w*) error with message (.*)$/, function( error, errorMessage, callback ){
+		var lastErrorArgs = errors[ errors.length - 1 ];
+
 		check( 'last error', error, lastErrorArgs[ 1 ], callback, true );
 		check( 'last error message', errorMessage, lastErrorArgs[ 0 ], callback );
 	});

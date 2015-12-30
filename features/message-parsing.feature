@@ -19,8 +19,7 @@ Scenario: The client receives an empty message
 
 Scenario: The client receives a message for an unknown topic
 	When the server sends the message B|R+
-	#TODO This should be a MESSAGE_PARSE_ERROR
-	Then the client throws a R error with message received message for unknown topic B
+	Then the client throws a MESSAGE_PARSE_ERROR error with message Received message for unknown topic B
 
 Scenario: The client receives a message with an unknown action
 	When the server sends the message R|XXX+

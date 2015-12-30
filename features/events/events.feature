@@ -19,7 +19,7 @@ Scenario: The client subscribes to an event
 Scenario: The server does not respond in time with an ACK
 	Given the server resets its message count
 		And some time passes
-	Then the client throws a ACK_TIMEOUT error with message test1
+	Then the client throws a ACK_TIMEOUT error with message No ACK message received in time for test1
 
 Scenario: The server sends an ACK message for test1
 	Given the server sends the message E|A|S|test1+
@@ -58,12 +58,12 @@ Scenario: The client attempts to subscribe to the same event multiple times. Thi
 Scenario: The client tries to unsubscribe from an event it wasn't previously subscribed to
 	Given the server resets its message count
 	When the client unsubscribes from an event named test3
+		And the server sends the message E|A|US|test1+
 		And the server sends the message E|E|NOT_SUBSCRIBED|test3+
-		#TODO Fix
-	Then the client throws a E error with message NOT_SUBSCRIBED 
+	Then the client throws a NOT_SUBSCRIBED error with message test3 
 
-#TODO
-#Scenario: The client doesn't receive an ACK message in time for its subscription
-	#Given the client subscribes to an event named test4
-	#When some time passes
-	#Then the client throws a ACK_TIMEOUT error with message test4
+@timeout
+Scenario: The client doesn't receive an ACK message in time for its subscription
+	Given the client subscribes to an event named test4
+	When some time passes
+	Then the client throws a ACK_TIMEOUT error with message No ACK message received in time for test4

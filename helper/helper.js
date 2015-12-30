@@ -5,8 +5,7 @@ exports.check = function( type, expected, actual, callback, dontCallbackOnSucces
 		if( dontCallbackOnSuccess !== true && callback ) {
 			callback();
 		}
-
-		return true;
+		return;
 	} else {
 		var error = new Error( 'Expected ' + type + ' to be ' + JSON.stringify( expected ) + ', but it was ' + JSON.stringify( actual ) );
 		if( callback ) {

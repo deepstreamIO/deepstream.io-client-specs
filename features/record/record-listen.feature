@@ -14,7 +14,7 @@ Scenario: The client listens to recordPrefix
 @timeout
 Scenario: The server does not respond in time with an ACK
 	When some time passes
-	Then the client throws a ACK_TIMEOUT error with message Listening to pattern recordPrefix/.*
+	Then the client throws a ACK_TIMEOUT error with message No ACK message received in time for recordPrefix/.*
 
 Scenario: The server responds with an ACK
 	Given the server sends the message R|A|L|recordPrefix/.*+
@@ -34,8 +34,7 @@ Scenario: The client unlistens to recordPrefix
 @timeout
 Scenario: The server does not respond in time with an ACK
 	When some time passes
-	#TODO: Rename message
-	Then the client throws a ACK_TIMEOUT error with message Listening to pattern recordPrefix/.*
+	Then the client throws a ACK_TIMEOUT error with message No ACK message received in time for recordPrefix/.*
 
 Scenario: The server responds with an ACK
 	Given the server sends the message R|A|UL|recordPrefix/.*+

@@ -47,4 +47,4 @@ Scenario: The client resends the listen record
 	#Then the server received the message R|L|recordPrefix/.*+
 
 Scenario: The client sends offline changes
-	Then the server received the message R|P|test1|103|pets.0.name|SMax+
+	Then the server received the message R|P|test1|101|pets.0.name|SMax+

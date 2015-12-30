@@ -76,9 +76,9 @@ module.exports = function() {
 	this.Then( /^the server received the message (.*)$/, function( message, callback ) {
 		var matchFound = false;
 		for( var i=0; i<server.allMessages.length && !matchFound; i++) {
-			matchFound = !!matchMessage( server.allMessages[ i ], message );
+			matchFound = !matchMessage( server.allMessages[ i ], message );
 		}
-		callback( !matchFound && ( 'No match for message ' + message + ' found') );
+		callback( !matchFound && ( 'No match for message ' + message + ' found. Current messages: ' + server.allMessages ) );
 	} );
 
 	this.Then( /^the server has received (\d*) messages$/, function( numberOfMessages, callback ) {

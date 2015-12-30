@@ -40,10 +40,12 @@ Scenario: The client is connected
 	Then the clients connection state is OPEN
 
 Scenario: The client resends the event subscription
-	Then the server received the message E|S|test1+
+	#TODO
+	#Then the server received the message E|S|test1+
 
 Scenario: The client resends the event listen
-	Then the server received the message E|L|test1+
+	#TODO
+	#Then the server received the message E|L|test1+
 
 Scenario: The client sends offline events
 	#TODO: Is this actually expected?

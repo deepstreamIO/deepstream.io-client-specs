@@ -2,23 +2,23 @@ var server = require( './tcp-server' );
 var config = require( '../config' );
 var check = require( '../helper/helper' ).check;
 
-var matchMessage = function( realMessage, expectedMessage ) {
+var matchMessage = function( actualMessage, expectedMessage ) {
 	if( server.allMessages.length === 0 ) {
 		return 'Server did not recieve any messages';
 	}
 	else if( expectedMessage.indexOf( '<UID>' ) === -1 ) {
-		return check( 'last received message', expectedMessage, convertChars( realMessage ) );
+		return check( 'last received message', expectedMessage, convertChars( actualMessage ) );
 	} else {
 		expectedMessage = expectedMessage.replace( /\|/g, '\\|' );
 		expectedMessage = expectedMessage.replace( '+', '\\+' );
 		expectedMessage = expectedMessage.replace( '<UID>', '.*' );
-		if( (new RegExp( expectedMessage ) ).test( convertChars( realMessage ) ) ) {
+		if( (new RegExp( expectedMessage ) ).test( convertChars( actualMessage ) ) ) {
 			return;
 		} else {
-			return convertChars( realMessage ) + ' did not match ' + expectedMessage;
+			return convertChars( actualMessage ) + ' did not match ' + expectedMessage;
 		}
 	}
-}
+};
 
 var convertChars = function( input ) {
 	return input
@@ -69,8 +69,8 @@ module.exports = function() {
 		check( 'active connections', Number( connectionCount ), server.connectionCount, callback );
 	});
 
-	this.Then( /^the last message the server recieved is (.*)$/, function( message, callback ){
-		callback( matchMessage( server.lastMessage, message ) );
+	this.Then( /^the last message the server recieved is (.*)$/, function( message ){
+		return matchMessage( server.lastMessage, message );
 	});
 
 	this.Then( /^the server received the message (.*)$/, function( message, callback ) {

@@ -12,7 +12,8 @@ Scenario: The client is connected
 # Happy Path
 Scenario: The client subscribes to an event
 	Given the client subscribes to an event named test1
-	Then the server received the message E|S|test1+
+	#data: string eventName, 
+	Then the server received the message E|S|test1+ 
 
 @timeout
 Scenario: The server does not respond in time with an ACK
@@ -33,7 +34,9 @@ Scenario: The client receives another event
 
 Scenario: The client publishes an event
 	When the client publishes an event named test1 with data yetAnotherValue
+	#string eventName, typed eventData
 	Then the server received the message E|EVT|test1|SyetAnotherValue+
+
 
 Scenario: The client unsubscribes from an event
 	When the client unsubscribes from an event named test1
@@ -56,7 +59,8 @@ Scenario: The client tries to unsubscribe from an event it wasn't previously sub
 	Given the server resets its message count
 	When the client unsubscribes from an event named test3
 		And the server sends the message E|E|NOT_SUBSCRIBED|test3+
-	Then the client throws a E error with message NOT_SUBSCRIBED
+		#TODO Fix
+	Then the client throws a E error with message NOT_SUBSCRIBED 
 
 #TODO
 #Scenario: The client doesn't receive an ACK message in time for its subscription

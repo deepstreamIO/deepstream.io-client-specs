@@ -27,6 +27,7 @@ var convertChars = function( input ) {
 };
 
 module.exports = function() {
+
 	this.Given( /the test server is ready/, function (callback) {
 		server.whenReady( callback );
 	});

@@ -13,7 +13,6 @@ Scenario: The server requests a record
 	And the server sends the message R|R|mergeRecord|100|{"key":"value1"}+
 
  Scenario: The client recieves an out of sync update
- 	Given the server resets its message count
  	When the server sends the message R|U|mergeRecord|102|{"key":"value3"}+
  	Then the client throws a VERSION_EXISTS error with message mergeRecord
  
@@ -23,6 +22,5 @@ Scenario: The server requests a record
  	#And the server sends the message R|A|P|test1+
  
  Scenario: The client recieves an error saying version already exists
- 	Given the server resets its message count
  	When the server sends the message R|E|VERSION_EXISTS|mergeRecord|102+
  	Then the client throws a VERSION_EXISTS error with message mergeRecord

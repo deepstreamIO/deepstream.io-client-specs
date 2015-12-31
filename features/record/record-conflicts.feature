@@ -10,7 +10,7 @@ Scenario: The client is connected
 Scenario: The server requests a record
 	Given the client creates a record named "mergeRecord"
 	When the server sends the message R|A|CR|mergeRecord+
-	When the server sends the message R|R|mergeRecord|100|{"key":"value1"}+
+	And the server sends the message R|R|mergeRecord|100|{"key":"value1"}+
 
  Scenario: The client recieves an out of sync update
  	Given the server resets its message count

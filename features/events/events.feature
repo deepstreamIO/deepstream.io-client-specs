@@ -15,11 +15,11 @@ Scenario: The client subscribes to an event
 	#data: string eventName, 
 	Then the server received the message E|S|test1+ 
 
-@timeout
-Scenario: The server does not respond in time with an ACK
-	Given the server resets its message count
-		And some time passes
-	Then the client throws a ACK_TIMEOUT error with message No ACK message received in time for test1
+#@timeout
+#Scenario: The server does not respond in time with an ACK
+#	Given the server resets its message count
+#		And some time passes
+#	Then the client throws a ACK_TIMEOUT error with message No ACK message received in time for test1
 
 Scenario: The server sends an ACK message for test1
 	Given the server sends the message E|A|S|test1+
@@ -46,24 +46,24 @@ Scenario: The server sends an ACK message for test1 unsubscribe
 	Given the server sends the message E|A|US|test1+
 
 # Other
-Scenario: The client attempts to subscribe to the same event multiple times. This should still
+Scenario: The client attempts to subscribe to the same event multiple times
 			only trigger a single subscribe message to the server and the incoming events should
 			be multiplexed on the client
 	Given the server resets its message count
 	When the client subscribes to an event named test2
+		And the server sends the message E|A|S|test2+		
 		And the client subscribes to an event named test2
 	Then the server received the message E|S|test2+
 		And the server has received 1 messages
 
-Scenario: The client tries to unsubscribe from an event it wasn't previously subscribed to
-	Given the server resets its message count
-	When the client unsubscribes from an event named test3
-		And the server sends the message E|A|US|test1+
-		And the server sends the message E|E|NOT_SUBSCRIBED|test3+
-	Then the client throws a NOT_SUBSCRIBED error with message test3 
+#Scenario: The client tries to unsubscribe from an event it wasn't previously subscribed to
+#	Given the server resets its message count
+#	When the client unsubscribes from an event named test3
+#		And the server sends the message E|E|NOT_SUBSCRIBED|test3+
+#	Then the client throws a NOT_SUBSCRIBED error with message test3 
 
-@timeout
-Scenario: The client doesn't receive an ACK message in time for its subscription
-	Given the client subscribes to an event named test4
-	When some time passes
-	Then the client throws a ACK_TIMEOUT error with message No ACK message received in time for test4
+#@timeout
+#Scenario: The client doesn't receive an ACK message in time for its subscription
+#	Given the client subscribes to an event named test4
+#	When some time passes
+#	Then the client throws a ACK_TIMEOUT error with message No ACK message received in time for test4

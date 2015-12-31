@@ -8,12 +8,12 @@ Scenario: The client is connected
 		And the server sends the message A|A+
 
 Scenario: The client creates a record
-	Given the client creates a record named "test1"
-	Then the last message the server recieved is R|CR|test1+
+	Given the client creates a record named "connectionRecord"
+	Then the last message the server recieved is R|CR|connectionRecord+
 
-Scenario: The server sends a read ACK and read message for test1
-	Given the server sends the message R|A|CR|test1+
-		And the server sends the message R|R|test1|100|{"name":"John", "pets": [{"name":"Ruffles", "type":"dog","age":2}]}+
+Scenario: The server sends a read ACK and read message for connectionRecord
+	Given the server sends the message R|A|S|connectionRecord+
+		And the server sends the message R|R|connectionRecord|100|{"name":"John", "pets": [{"name":"Ruffles", "type":"dog","age":2}]}+
 
 Scenario: The client listens to recordPrefix
 	When the client listens to a record matching "recordPrefix/.*"
@@ -28,7 +28,7 @@ Scenario: The client loses it connection to the server
 	Then the clients connection state is RECONNECTING
 
 Scenario: The client sends an partial update
-	When the client sets the record "test1" "pets.0.name" to "Max"
+	When the client sets the record "connectionRecord" "pets.0.name" to "Max"
 	
 Scenario: The client reconnects to the server
 	When the connection to the server is reestablished
@@ -40,11 +40,11 @@ Scenario: The client is connected
 	Then the clients connection state is OPEN
 
 Scenario: The client resends the record subscription
-	Then the server received the message R|CR|test1+
+	Then the server received the message R|CR|connectionRecord+
 
 Scenario: The client resends the listen record
 	#TODO
 	#Then the server received the message R|L|recordPrefix/.*+
 
 Scenario: The client sends offline changes
-	Then the server received the message R|P|test1|101|pets.0.name|SMax+
+	Then the server received the message R|P|connectionRecord|101|pets.0.name|SMax+

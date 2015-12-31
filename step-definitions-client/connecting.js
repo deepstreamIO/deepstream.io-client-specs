@@ -2,16 +2,30 @@ var deepstream = require( 'deepstream.io-client-js' );
 var config = require( '../config' );
 var check = require( '../helper/helper' ).check;
 var lastAuthArgs;
-var errors = [];
+
+var errors;
+var catchError;
 
 module.exports = function() {
+	this.Before( function( scenario ) {
+		errors = [];
+		catchError = false;
+	});
+
+	this.After( function( scenario ) {
+		if( !catchError && errors.length > 0 ) {
+			throw 'Unexpected error occured during scenario. Errors: ' + JSON.stringify( errors );
+		}
+	});
+
 	this.Given( /^the client is initialised$/, function( callback ){
 		if( global.dsClient ) {
 			global.dsClient.close();
+			global.dsClient.removeListener( 'error' );
 		}
 		global.dsClient = deepstream( config.testServerHost + ':' + config.testServerPort, {
-			subscriptionTimeout: 60,
-			recordReadAckTimeout: 60,
+			subscriptionTimeout: 100,
+			recordReadAckTimeout: 150,
 			recordReadTimeout: 260
 		});
 		global.dsClient.on( 'error', function(){
@@ -39,14 +53,24 @@ module.exports = function() {
 		check( 'connectionState', connectionState, global.dsClient.getConnectionState(), callback );
 	});
 
-	this.Then( /^the client throws a (\w*) error with message (.*)$/, function( error, errorMessage, callback ){
-		var lastErrorArgs = errors[ errors.length - 1 ];
+	this.Then( /^the client throws a (\w*) error with message (.*)$/, function( error, errorMessage ){
+		catchError = true;
+		var lastErrorArgs = errors[ errors.length - 1 ];		
+		
+		if( errors.length === 0 ) {
+			return 'No errors were thrown';
+			return;
+		}
 
-		check( 'last error', error, lastErrorArgs[ 1 ], callback, true );
-		check( 'last error message', errorMessage, lastErrorArgs[ 0 ], callback );
+		var error = check( 'last error', error, lastErrorArgs[ 1 ] );
+		var errorMessage = check( 'last error message', errorMessage, lastErrorArgs[ 0 ] );
+		if( error || errorMessage ) {
+			return error + '\n' + errorMessage;
+		}
 	});
 
 	this.Then( /^the last login failed with error (\w*) and message (.*)$/, function( error, errorMessage, callback ){
+		catchError = true;
 		check( 'last auth error', error, lastAuthArgs[ 1 ], callback, true );
 		check( 'last auth error message', errorMessage, lastAuthArgs[ 2 ], callback );
 	});

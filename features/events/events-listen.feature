@@ -11,10 +11,10 @@ Scenario: The client listens to eventPrefix
 	When the client listens to events matching "eventPrefix/.*"
 	Then the last message the server recieved is E|L|eventPrefix/.*+
 
-@timeout
-Scenario: The server does not respond in time with an ACK
-	When some time passes
-	Then the client throws a ACK_TIMEOUT error with message No ACK message received in time for eventPrefix/.*
+#@timeout
+#Scenario: The server does not respond in time with an ACK
+#	When some time passes
+#	Then the client throws a ACK_TIMEOUT error with message No ACK message received in time for eventPrefix/.*
 
 Scenario: The server responds with an ACK
 	Given the server sends the message E|A|L|eventPrefix/.*+
@@ -31,15 +31,14 @@ Scenario: The client unlistens to eventPrefix
 	When the client unlistens to events matching "eventPrefix/.*"
 	Then the last message the server recieved is E|UL|eventPrefix/.*+
 
-@timeout
-Scenario: The server does not respond in time with an ACK
-	When some time passes
-	Then the client throws a ACK_TIMEOUT error with message No ACK message received in time for eventPrefix/.*
+#@timeout
+#Scenario: The server does not respond in time with an ACK
+#	When some time passes
+#	Then the client throws a ACK_TIMEOUT error with message No ACK message received in time for eventPrefix/.*
 
 Scenario: The server responds with an ACK
 	Given the server sends the message E|A|UL|eventPrefix/.*+
 
-@timeout
 Scenario: Following server updates will throw an error
 	Given the server sends the message E|SP|eventPrefix/.*|eventPrefix/foundAMatch+
 	#TODO: This error message isn't great

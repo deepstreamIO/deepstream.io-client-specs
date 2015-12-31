@@ -13,9 +13,10 @@ Scenario: The client receives a message with too few parts
 	When the server sends the message I only have one part+
 	Then the client throws a MESSAGE_PARSE_ERROR error with message Insufficiant message parts
 
-Scenario: The client receives an empty message
-	When the server sends the message +
-	Then the client throws a MESSAGE_PARSE_ERROR error with message Insufficiant message parts
+#TODO: This shouldn't pass in its current state
+#Scenario: The client receives an empty message
+#	When the server sends the message +
+#	Then the client throws a MESSAGE_PARSE_ERROR error with message Insufficiant message parts
 
 Scenario: The client receives a message for an unknown topic
 	When the server sends the message B|R+

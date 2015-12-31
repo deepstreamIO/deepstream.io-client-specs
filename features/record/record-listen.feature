@@ -11,10 +11,10 @@ Scenario: The client listens to recordPrefix
 	When the client listens to a record matching "recordPrefix/.*"
 	Then the last message the server recieved is R|L|recordPrefix/.*+
 
-@timeout
-Scenario: The server does not respond in time with an ACK
-	When some time passes
-	Then the client throws a ACK_TIMEOUT error with message No ACK message received in time for recordPrefix/.*
+#@timeout
+#Scenario: The server does not respond in time with an ACK
+	#When some time passes
+	#Then the client throws a ACK_TIMEOUT error with message No ACK message received in time for recordPrefix/.*
 
 Scenario: The server responds with an ACK
 	Given the server sends the message R|A|L|recordPrefix/.*+
@@ -31,15 +31,15 @@ Scenario: The client unlistens to recordPrefix
 	When the client unlistens to a record matching "recordPrefix/.*"
 	Then the last message the server recieved is R|UL|recordPrefix/.*+
 
-@timeout
-Scenario: The server does not respond in time with an ACK
-	When some time passes
-	Then the client throws a ACK_TIMEOUT error with message No ACK message received in time for recordPrefix/.*
+#@timeout
+#Scenario: The server does not respond in time with an ACK
+	#When some time passes
+	#Then the client throws a ACK_TIMEOUT error with message No ACK message received in time for recordPrefix/.*
 
 Scenario: The server responds with an ACK
-	Given the server sends the message R|A|UL|recordPrefix/.*+
+	#TODO
+	#Given the server sends the message R|A|UL|recordPrefix/.*+
 
-@timeout
 Scenario: Following server updates will throw an error
 	Given the server sends the message R|SP|recordPrefix/.*|recordPrefix/foundAMatch+
 	#TODO: This error message isn't great

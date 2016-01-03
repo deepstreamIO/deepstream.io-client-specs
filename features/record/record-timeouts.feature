@@ -9,14 +9,12 @@ Scenario: The client is connected
 
 @timeout
 Scenario: The server does not respond in time with an ACK
-	Given the server resets its message count
 	When the client creates a record named "unhappyRecord"
 		And some time passes
 	Then the client throws a ACK_TIMEOUT error with message unhappyRecord
 
 @timeout
 Scenario: The server does not recieve initial record data in time
- 	Given the server resets its message count
  	When the server sends the message R|A|S|unhappyRecord+
  		And some time passes
  	#TODO: readtimeout?
@@ -33,8 +31,7 @@ Scenario: The client sends an partial update
 
 #@timeout
 #Scenario: The server does not respond in time with an ACK
-	#Given the server resets its message count
-	#And some time passes
+	#Given some time passes
 	#TODO: Do write acks actually exists?
 	#Then the client throws a ACK_TIMEOUT error with message unhappyRecord
 
@@ -43,13 +40,11 @@ Scenario: The client sends an partial update
 # error callback
 @timeout
 Scenario: The server send a cache retrieval timeout
- 	Given the server resets its message count
  	When the server sends the message R|E|CACHE_RETRIEVAL_TIMEOUT|unhappyRecord+
  	Then the client throws a CACHE_RETRIEVAL_TIMEOUT error with message unhappyRecord
  
  @timeout
 Scenario: The server send a storage retrieval timeout
- 	Given the server resets its message count
  	When the server sends the message R|E|STORAGE_RETRIEVAL_TIMEOUT|unhappyRecord+
  	Then the client throws a STORAGE_RETRIEVAL_TIMEOUT error with message unhappyRecord
 
@@ -59,7 +54,6 @@ Scenario: The client discards record
 
 @timeout
 Scenario: The server does not respond in time with an ACK
-	Given the server resets its message count
 	When some time passes
 	Then the client throws a ACK_TIMEOUT error with message unhappyRecord
 
@@ -72,6 +66,5 @@ Scenario: The client deletes the record
 
 @timeout
 Scenario: The server does not recieve an ack
-	Given the server resets its message count
 	When some time passes
 	Then the client throws a ACK_TIMEOUT error with message unhappyRecord

@@ -43,8 +43,7 @@ Scenario: The client resends the record subscription
 	Then the server received the message R|CR|connectionRecord+
 
 Scenario: The client resends the listen record
-	#TODO
-	#Then the server received the message R|L|recordPrefix/.*+
+	Then the server received the message R|L|recordPrefix/.*+
 
 Scenario: The client sends offline changes
 	Then the server received the message R|P|connectionRecord|101|pets.0.name|SMax+

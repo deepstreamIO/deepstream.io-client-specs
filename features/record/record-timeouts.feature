@@ -35,9 +35,6 @@ Scenario: The client sends an partial update
 	#TODO: Do write acks actually exists?
 	#Then the client throws a ACK_TIMEOUT error with message unhappyRecord
 
-# TODO That is a general thing. Topic specific errors (event, record etc) arrive correctly at
-# the topic specific error handler, but use the action rather than the error for the general 
-# error callback
 @timeout
 Scenario: The server send a cache retrieval timeout
  	When the server sends the message R|E|CACHE_RETRIEVAL_TIMEOUT|unhappyRecord+
@@ -67,4 +64,4 @@ Scenario: The client deletes the record
 @timeout
 Scenario: The server does not recieve an ack
 	When some time passes
-	Then the client throws a ACK_TIMEOUT error with message unhappyRecord
+	Then the client throws a DELETE_TIMEOUT error with message unhappyRecord

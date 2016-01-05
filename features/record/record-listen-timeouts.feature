@@ -22,5 +22,5 @@ Scenario: The client unlistens to recordPrefix
 
 @timeout
 Scenario: The server does not respond in time with an ACK
-	When some time passes
-	Then the client throws a ACK_TIMEOUT error with message No ACK message received in time for recordPrefix/.*
+	#When some time passes
+	#Then the client throws a ACK_TIMEOUT error with message No ACK message received in time for recordPrefix/.*

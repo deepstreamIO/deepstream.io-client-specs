@@ -15,9 +15,8 @@ Scenario: The client makes an RPC
 	When the client requests RPC toUppercase with data abc
 	Then the last message the server recieved is P|REQ|toUppercase|<UID>|Sabc+
 
-#TODO
-#Scenario: The client gets an ACK
-#	When the server sends the message P|A|REQ|<UID>+
+Scenario: The client gets an ACK
+	When the server sends the message P|A|REQ|<UID>+
 
 Scenario: The client receives a succesful response
 	When the server sends the message P|RES|toUppercase|<UID>|SABC+
@@ -29,8 +28,8 @@ Scenario: The client makes an RPC
 	When the client requests RPC toUppercase with data abc
 	Then the last message the server recieved is P|REQ|toUppercase|<UID>|Sabc+
 
-#Scenario: The client gets an ACK
-#	When the server sends the message P|A|REQ|<UID>+
+Scenario: The client gets an ACK
+	When the server sends the message P|A|REQ|<UID>+
 
 Scenario: The client receives an error response
 	When the server sends the message P|E|RPC Error Message|toUppercase|<UID>+

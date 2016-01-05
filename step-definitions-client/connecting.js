@@ -27,7 +27,8 @@ module.exports = function() {
 			subscriptionTimeout: 100,
 			recordReadAckTimeout: 200,
 			recordReadTimeout: 260,
-			recordDeleteTimeout: 100
+			recordDeleteTimeout: 100,
+			rpcResponseTimeout: 200
 		});
 		global.dsClient.on( 'error', function(){
 			errors.push( arguments );

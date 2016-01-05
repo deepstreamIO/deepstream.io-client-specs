@@ -53,20 +53,23 @@ module.exports = function() {
 		check( 'connectionState', connectionState, global.dsClient.getConnectionState(), callback );
 	});
 
-	this.Then( /^the client throws a (\w*) error with message (.*)$/, function( error, errorMessage ){
+	this.Then( /^the client throws a (\w*) error with message (.*)$/, function( error, errorMessage, callback ){
 		catchError = true;
 		var lastErrorArgs = errors[ errors.length - 1 ];		
 		
 		if( errors.length === 0 ) {
-			return 'No errors were thrown';
+			callback( 'No errors were thrown' );
 			return;
 		}
 
 		var error = check( 'last error', error, lastErrorArgs[ 1 ] );
 		var errorMessage = check( 'last error message', errorMessage, lastErrorArgs[ 0 ] );
 		if( error || errorMessage ) {
-			return error + '\n' + errorMessage;
+			callback( error + ' ' + errorMessage );
+			return;
 		}
+
+		callback();
 	});
 
 	this.Then( /^the last login failed with error (\w*) and message (.*)$/, function( error, errorMessage, callback ){

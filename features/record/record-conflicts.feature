@@ -9,6 +9,8 @@ Scenario: The client is connected
 
 Scenario: The server requests a record
 	Given the client creates a record named "mergeRecord"
+
+Scenario: The server responds with ack and read
 	When the server sends the message R|A|CR|mergeRecord+
 	And the server sends the message R|R|mergeRecord|100|{"key":"value1"}+
 

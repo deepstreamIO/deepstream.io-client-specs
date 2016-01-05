@@ -72,6 +72,5 @@ Scenario: The client stops providing a RPC
 	Then the last message the server recieved is P|US|toUppercase+
 
 Scenario: The client gets an ACK
-	#TODO
- 	#When the server sends the message P|A|US|toUppercase+
+ 	When the server sends the message P|A|US|toUppercase+
 	

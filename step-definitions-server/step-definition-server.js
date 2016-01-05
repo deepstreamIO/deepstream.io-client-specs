@@ -14,7 +14,7 @@ var matchMessage = function( actualMessage, expectedMessage ) {
 	} else {
 		expectedMessage = expectedMessage.replace( /\|/g, '\\|' );
 		expectedMessage = expectedMessage.replace( '+', '\\+' );
-		expectedMessage = expectedMessage.replace( '<UID>', '(.*)' );
+		expectedMessage = expectedMessage.replace( '<UID>', '([^\\|]*)' );
 
 		var match = convertChars( actualMessage ).match( new RegExp( expectedMessage ) );
 		if( match ) {
@@ -45,7 +45,7 @@ module.exports = function() {
 	});
 
 	this.When( /^the server sends the message (.*)$/, function( message, callback ){
-		if( message.indexOf( '<UID>' ) !== -1 ) {
+		if( message.indexOf( '<UID>' ) !== -1 && uid ) {
 			message = message.replace( '<UID>', uid );
 		}
 
@@ -81,8 +81,8 @@ module.exports = function() {
 		check( 'active connections', Number( connectionCount ), server.connectionCount, callback );
 	});
 
-	this.Then( /^the last message the server recieved is (.*)$/, function( message ){
-		return matchMessage( server.lastMessage, message );
+	this.Then( /^the last message the server recieved is (.*)$/, function( message, callback ){
+		callback( matchMessage( server.lastMessage, message ) );
 	});
 
 	this.Then( /^the server received the message (.*)$/, function( message, callback ) {

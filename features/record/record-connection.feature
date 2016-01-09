@@ -1,5 +1,12 @@
 @records
 Feature: Record Connectivity
+	Record connectivity is slightly more complicated than the other 
+	types. We must resubscribe listen patterns, however
+	the when rerequesting the read action to resubscribe to records 
+	the result from the server must be executed as an update
+	rather than an initial read. This is because possible merge 
+	conflicts may occur if versions are not in sync while the 
+	connection was lost.
 
 Scenario: The client is connected
 	Given the test server is ready

@@ -1,5 +1,16 @@
 @records
 Feature: Record Listen
+	Listening to Record usage allows the client to reduce the amount 
+	of records it needs to update. If a client requests a record that 
+	matches your pattern or when all the clients discard it you'll be 
+	told so you can only need to update records that you know are 
+	being listened used.
+
+	This helps reduce the amount of updates you have in the system at 
+	any time. Please note,  when using records to update values within
+	the deepstream database which is also queried you will need to 
+	ensure those records are requested for the query to work with the 
+	latest data, or avoid using listen for those records.
 
 Scenario: The client is connected
 	Given the test server is ready

@@ -1,5 +1,20 @@
 @records
 Feature: Record Subscription
+	Record subscriptions is done purely on the client side. Whenever 
+	an update is recieved for a record, you should find out if anyone 
+	is interested and then notify them. When implementing, please keep
+	in mind the difference between an update and a patch.
+
+	Updates mean you should fully discard the data that you had, and 
+	replace it with the data recieved. 
+
+	Patch means you should apply the diff onto the data you currently 
+	have.
+
+	From the clients callback perspective there isn't really a 
+	difference when recieving updates or patches, since the 
+	new data is compared against the old and only the differences 
+	are provided to the callback
 
 Scenario: The client is connected
 	Given the test server is ready

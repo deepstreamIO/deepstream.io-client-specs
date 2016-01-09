@@ -1,5 +1,9 @@
 @events
 Feature: Events Connectivity
+	Events subscriptions must be resent to the server after connection 
+	issues to guarantee it continues recieving them correctly. This 
+	applies to both subscribing to events and listening to event 
+	subscriptions.
 
 Scenario: The client is connected
 	Given the test server is ready

@@ -1,5 +1,28 @@
 @records
 Feature: Record Timeouts
+	Records have multiple different actions they can be made, and each
+	of those actions have their own timeouts.
+	
+	These timeouts allow you to notify the user if an error has 
+	occured due to connection issues and gives you granular events to 
+	allow different reactions to different situations.
+
+	The timeouts are:
+
+	ACK_TIMEOUT 
+		If the user does not recieve a timeout when initially 
+		requesting a record or discarding it.
+
+	RESPONSE_TIMEOUT
+		If the user does not recieve the data in a timely fashion.
+
+	DELETE_TIMEOUT
+		This is when the backend does not respond when a record is deleted.
+	
+	CACHE_RETRIEVAL_TIMEOUT 
+	STORAGE_RETRIEVAL_TIMEOUT
+		This is a specific backend issue and does not need to be 
+		exposed to the user, but helps with logging issues.
 
 Scenario: The client is connected
 	Given the test server is ready
@@ -18,8 +41,8 @@ Scenario: The server does not recieve initial record data in time
  	When the server sends the message R|A|S|unhappyRecord+
  		And some time passes
  	#TODO: readtimeout?
- 	# ACK_TIMEOUT is not too bad here, as it is the subscription that's beeing acknowledget
- 	# Response timeout is for RPC responses. Let's discuss
+ 	# ACK_TIMEOUT is not too bad here, as it is the subscription that's being acknowledged
+ 	# Response timeout is for rpc responses. Let's discuss
  	Then the client throws a "RESPONSE_TIMEOUT" error with message "unhappyRecord"
 
 Scenario: The server then recieves the initial record data

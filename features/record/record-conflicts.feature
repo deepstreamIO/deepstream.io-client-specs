@@ -1,5 +1,15 @@
 @records
 Feature: Record Conflicts
+	Record conflicts occur most often when the client disconnects, 
+	does offline work and then reconnects resulting in a merge issue 
+	with other potential edits, but can also occur in rare conditions 
+	as part of a race condition. If a conflict does occur, the client 
+	should recieve a VERSION_EXISTS error.
+
+	Please note this will change as part of the MERGE epic planned, 
+	and users will be notified instead that the write failed and be 
+	allowed to effectively merge/rebase it as needed. When 
+	implementing please let the core team know so we can collabarate.
 
 Scenario: The client is connected
 	Given the test server is ready

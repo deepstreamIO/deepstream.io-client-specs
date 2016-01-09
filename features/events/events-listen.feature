@@ -1,5 +1,10 @@
 @events
-Feature: Event Listen
+Feature: Event Listen	
+	Listening to Event subscriptions/unsubscriptions allows the client
+	to reduce the events it needs to publish. If a client subscribes 
+	to an event that matches your pattern or when all the clients 
+	unsubscribe you'll be told so you can only publish events that you
+	know are being listened to.
 
 Scenario: The client is connected
 	Given the test server is ready

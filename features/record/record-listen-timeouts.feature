@@ -1,5 +1,8 @@
 @records
 Feature: Record Listen Timeouts
+	Whenever a listen subscribe or unsubscribe event does not recieve 
+	an acknolowdgement from the server the client should emit an ack 
+	timeout error so that the client can attempt to retry.
 
 Scenario: The client is connected
 	Given the test server is ready

@@ -1,5 +1,7 @@
 @rpc
 Feature: RPC Connectivity
+	RPC providers must be resent to the server after connection 
+	issuees to guarantee it continues to recieve requests correctly.
 
 Scenario: The client is connected
 	Given the test server is ready
@@ -7,8 +9,8 @@ Scenario: The client is connected
 		And the client logs in with username "XXX" and password "YYY"
 		And the server sends the message A|A+
 
-Scenario: The client provides a RPC
-	When the client provides a RPC called "toUppercase"
+Scenario: The client provides a rpc
+	When the client provides a rpc called "toUppercase"
 	Then the last message the server recieved is P|S|toUppercase+
 
 Scenario: The client gets an ACK

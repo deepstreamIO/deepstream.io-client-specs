@@ -1,5 +1,14 @@
 @records
 Feature: Record
+	Records are arbitrary JSON structures that can be manipulated and 
+	subscribed to. Every change to a record is synced accross all 
+	subscribed clients. 
+
+	The actions that can be performed on a record are:
+	- Request a record to recieve the current state and subcribe
+	- Send or Recieve updates to the record
+	- Discard the record when no longer needed on the client
+	- Delete the record if no longer needed in the system
 
 Scenario: The client is connected
 	Given the test server is ready
@@ -58,15 +67,3 @@ Scenario: The client deletes the record
 
 Scenario: The server responds with a delete ACK
 	When the server sends the message R|A|D|happyRecord+
-
-Scenario: The client attempts to request the same record multiple times. This should still
-		only trigger a single subscribe message to the server and the incoming events should
-		be multiplexed on the client
-
-	Given the server resets its message count
-	When the client creates a record named "doubleRecord"
-		And the server sends the message R|A|S|doubleRecord+
-		And the server sends the message R|R|doubleRecord|100|{"name":"John", "pets": [{"name":"Ruffles", "type":"dog","age":2}]}+
-		And the client creates a record named "doubleRecord"
-	Then the last message the server recieved is R|CR|doubleRecord+
-		And the server has received 1 messages

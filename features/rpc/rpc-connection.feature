@@ -4,13 +4,11 @@ Feature: RPC Connectivity
 Scenario: The client is connected
 	Given the test server is ready
 		And the client is initialised
-		And the client logs in with username XXX and password YYY
+		And the client logs in with username "XXX" and password "YYY"
 		And the server sends the message A|A+
 
-# Providing
-
 Scenario: The client provides a RPC
-	When the client provides a RPC called toUppercase
+	When the client provides a RPC called "toUppercase"
 	Then the last message the server recieved is P|S|toUppercase+
 
 Scenario: The client gets an ACK
@@ -19,16 +17,16 @@ Scenario: The client gets an ACK
 Scenario: The client loses it connection to the server
 	When the connection to the server is lost
 	Given some time passes
-	Then the clients connection state is RECONNECTING
+	Then the clients connection state is "RECONNECTING"
 	
 Scenario: The client reconnects to the server
 	When the connection to the server is reestablished
-	Then the clients connection state is AUTHENTICATING
+	Then the clients connection state is "AUTHENTICATING"
 
 Scenario: The client is connected
-	Given the client logs in with username XXX and password YYY
+	Given the client logs in with username "XXX" and password "YYY"
 		And the server sends the message A|A+
-	Then the clients connection state is OPEN
+	Then the clients connection state is "OPEN"
 
 Scenario: The client resends the rpc provider
 	Then the server received the message P|S|toUppercase+

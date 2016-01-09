@@ -6,12 +6,12 @@ var lastEventData;
 var listenCallback = sinon.spy();
 
 module.exports = function() {
-	this.When( /^the client publishes an event named (\w*) with data (\w*)$/, function( eventName, eventData, callback ){
+	this.When( /^the client publishes an event named "(\w*)" with data "(\w*)"$/, function( eventName, eventData, callback ){
 		global.dsClient.event.emit( eventName, eventData );
 		setTimeout( callback, config.tcpMessageWaitTime );
 	});
 	
-	this.Then( /^the client received the event (\w*) with data (\w*)$/, function(eventName, eventData, callback ){
+	this.Then( /^the client received the event "(\w*)" with data "(\w*)"$/, function(eventName, eventData, callback ){
 		check( 'last event name', eventName, lastEventName, callback, true );
 		check( 'last event data', eventData, lastEventData, callback );
 	});
@@ -19,7 +19,7 @@ module.exports = function() {
 	/**
 	* Subscribes
 	*/	
-	this.When( /^the client subscribes to an event named (\w*)$/, function( eventName, callback ){
+	this.When( /^the client subscribes to an event named "(\w*)"$/, function( eventName, callback ){
 		global.dsClient.event.subscribe( eventName, function( data ){
 			lastEventName = eventName;
 			lastEventData = data;
@@ -27,7 +27,7 @@ module.exports = function() {
 		setTimeout( callback, config.tcpMessageWaitTime );
 	});
 
-	this.When( /^the client unsubscribes from an event named (\w*)$/, function( eventName, callback ){
+	this.When( /^the client unsubscribes from an event named "(\w*)"$/, function( eventName, callback ){
 		global.dsClient.event.unsubscribe( eventName );
 		setTimeout( callback, config.tcpMessageWaitTime );
 	});

@@ -4,7 +4,7 @@ Feature: Record Listen
 Scenario: The client is connected
 	Given the test server is ready
 		And the client is initialised
-		And the client logs in with username XXX and password YYY
+		And the client logs in with username "XXX" and password "YYY"
 		And the server sends the message A|A+
 
 Scenario: The client listens to recordPrefix
@@ -33,4 +33,4 @@ Scenario: The server responds with an ACK
 Scenario: Following server updates will throw an error
 	Given the server sends the message R|SP|recordPrefix/.*|recordPrefix/foundAMatch+
 	#TODO: This error message isn't great
-	And the client throws a UNSOLICITED_MESSAGE error with message recordPrefix/.* 
+	And the client throws a "UNSOLICITED_MESSAGE" error with message "recordPrefix/.*"

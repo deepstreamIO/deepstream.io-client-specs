@@ -4,7 +4,7 @@ Feature: Record Connectivity
 Scenario: The client is connected
 	Given the test server is ready
 		And the client is initialised
-		And the client logs in with username XXX and password YYY
+		And the client logs in with username "XXX" and password "YYY"
 		And the server sends the message A|A+
 
 Scenario: The client creates a record
@@ -25,19 +25,19 @@ Scenario: The server responds with an ACK
 Scenario: The client loses it connection to the server
 	When the connection to the server is lost
 	Given some time passes
-	Then the clients connection state is RECONNECTING
+	Then the clients connection state is "RECONNECTING"
 
 Scenario: The client sends an partial update
 	When the client sets the record "connectionRecord" "pets.0.name" to "Max"
 	
 Scenario: The client reconnects to the server
 	When the connection to the server is reestablished
-	Then the clients connection state is AUTHENTICATING
+	Then the clients connection state is "AUTHENTICATING"
 
 Scenario: The client is connected
-	Given the client logs in with username XXX and password YYY
+	Given the client logs in with username "XXX" and password "YYY"
 		And the server sends the message A|A+
-	Then the clients connection state is OPEN
+	Then the clients connection state is "OPEN"
 
 Scenario: The client resends the record subscription
 	Then the server received the message R|CR|connectionRecord+

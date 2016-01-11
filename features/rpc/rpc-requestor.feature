@@ -1,15 +1,15 @@
 @rpc
 Feature: Requesting an RPC
 	Remote Procedure Calls are deepstream's concept of request-response
-	communication. This requires a client that makes the rpc 
+	communication. This requires a client that makes the RPC 
 	(requestor or receiver) and another client that answers it (provider).
 
-	The requestor can make an rpc call and in most cases expected a 
+	The requestor can make an RPC call and in most cases expected a 
 	succesful callback.
 
 	However, if something does go wrong, it should also expect an error 
 	message, which can either be system determined such as 
-	NO_rpc_PROVIDER or an error thrown by the provider itself, 
+	NO_RPC_PROVIDER or an error thrown by the provider itself, 
 	like when the incorrect arguments are sent.
 
 Scenario: The client is connected
@@ -20,8 +20,8 @@ Scenario: The client is connected
 
 # Success 
 
-Scenario: The client makes an rpc
-	When the client requests rpc "toUppercase" with data "abc"
+Scenario: The client makes an RPC
+	When the client requests RPC "toUppercase" with data "abc"
 	Then the last message the server recieved is P|REQ|toUppercase|<UID>|Sabc+
 
 Scenario: The client gets an ACK
@@ -29,18 +29,18 @@ Scenario: The client gets an ACK
 
 Scenario: The client receives a succesful response
 	When the server sends the message P|RES|toUppercase|<UID>|SABC+
-	Then the client recieves a successful rpc callback for "toUppercase" with data "ABC"
+	Then the client recieves a successful RPC callback for "toUppercase" with data "ABC"
 
 # Error
 
-Scenario: The client makes an rpc
-	When the client requests rpc "toUppercase" with data "abc"
+Scenario: The client makes an RPC
+	When the client requests RPC "toUppercase" with data "abc"
 	Then the last message the server recieved is P|REQ|toUppercase|<UID>|Sabc+
 
 Scenario: The client gets an ACK
 	When the server sends the message P|A|REQ|<UID>+
 
 Scenario: The client receives an error response
-	When the server sends the message P|E|rpc Error Message|toUppercase|<UID>+
-	Then the client recieves an error rpc callback for "toUppercase" with the message "rpc Error Message"
+	When the server sends the message P|E|RPC Error Message|toUppercase|<UID>+
+	Then the client recieves an error RPC callback for "toUppercase" with the message "RPC Error Message"
 	

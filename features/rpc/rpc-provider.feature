@@ -1,18 +1,18 @@
 @rpc
 Feature: Providing RPC
 	Remote Procedure Calls are deepstream's concept of request-response 
-	communication. This requires a client that makes the rpc 
+	communication. This requires a client that makes the RPC 
 	(requestor or receiver) and another client that answers it (provider).
 
 	The provider is responsible for notifying the server that it is 
 	capable of recieving requests with a certain name.
 
 	These scenarios covers the provider, which is responsible for 
-	recieving rpc with a certain name, and either accepting to execute
+	recieving RPC with a certain name, and either accepting to execute
 	them by sending back an acknowledgment, or rejecting it so that another 
-	rpc provider can execute it instead.
+	RPC provider can execute it instead.
 
-	If the rpc provider does accept the request, it can either respond
+	If the RPC provider does accept the request, it can either respond
 	with a succesful callback and the result arguments, or with an 
 	error and associated error message.	
 
@@ -24,8 +24,8 @@ Scenario: The client is connected
 
 # Providing
 
-Scenario: The client provides a rpc
-	When the client provides a rpc called "toUppercase"
+Scenario: The client provides a RPC
+	When the client provides a RPC called "toUppercase"
 	Then the last message the server recieved is P|S|toUppercase+
 
 Scenario: The client gets an ACK
@@ -38,10 +38,10 @@ Scenario: The client gets a supported request
 
 Scenario: The client responds with an ack and processes message
 	Then the last message the server recieved is P|A|toUppercase|<UID>+
- 		And the client recieves a request for a rpc called "toUppercase" with data "abc"
+ 		And the client recieves a request for a RPC called "toUppercase" with data "abc"
 
 Scenario: The client responds with a success
-	When the client responds to the rpc "toUppercase" with data "ABC"
+	When the client responds to the RPC "toUppercase" with data "ABC"
  	Then the last message the server recieved is P|RES|toUppercase|<UID>|SABC+
 
 # Error
@@ -51,10 +51,10 @@ Scenario: The client gets a supported request
 
 Scenario: The client responds with an ack and processes message
 	Then the last message the server recieved is P|A|toUppercase|<UID>+
- 		And the client recieves a request for a rpc called "toUppercase" with data "abc"
+ 		And the client recieves a request for a RPC called "toUppercase" with data "abc"
 
 Scenario: The client responds with an error
-	When the client responds to the rpc "toUppercase" with the error "An Error Occured"
+	When the client responds to the RPC "toUppercase" with the error "An Error Occured"
  	Then the last message the server recieved is P|E|An Error Occured|toUppercase|<UID>+
 
 # Rejection when supported
@@ -64,10 +64,10 @@ Scenario: The client gets a supported request
 
 Scenario: The client responds with an ack and processes message
 	Then the last message the server recieved is P|A|toUppercase|<UID>+
- 		And the client recieves a request for a rpc called "toUppercase" with data "abc"
+ 		And the client recieves a request for a RPC called "toUppercase" with data "abc"
 
 Scenario: The client responds with an error
-	When the client rejects the rpc "toUppercase"
+	When the client rejects the RPC "toUppercase"
  	Then the last message the server recieved is P|REJ|toUppercase|<UID>+
 
 # Rejection when not supported
@@ -80,8 +80,8 @@ Scenario: The client responds a reject
 
 # Unproviding
 
-Scenario: The client stops providing a rpc
-	When the client stops providing a rpc called "toUppercase"
+Scenario: The client stops providing a RPC
+	When the client stops providing a RPC called "toUppercase"
 	Then the last message the server recieved is P|US|toUppercase+
 
 Scenario: The client gets an ACK

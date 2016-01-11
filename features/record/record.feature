@@ -39,17 +39,9 @@ Scenario: The client sends an partial update
 	When the client sets the record "happyRecord" "pets.0.name" to "Max"
 	Then the last message the server recieved is R|P|happyRecord|103|pets.0.name|SMax+
 
-Scenario: The server sends a write ACK message for happyRecord
-	#TODO:  this doesn't exist
-	#Given the server sends the message R|A|P|happyRecord+
-
 Scenario: The client receives a full update
 	When the client sets the record "happyRecord" to {"name":"Smith","pets":[{"name":"Ruffus","type":"dog","age":5}]}
 	Then the last message the server recieved is R|U|happyRecord|104|{"name":"Smith","pets":[{"name":"Ruffus","type":"dog","age":5}]}+
-
-Scenario: The server sends a write ACK message for happyRecord
-	#TODO:  this doesn't exist
-	#Given the server sends the message R|A|U|happyRecord+
 
 Scenario: The client discards the record
 	When the client discards the record named "happyRecord"

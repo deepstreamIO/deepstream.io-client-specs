@@ -25,8 +25,3 @@ Scenario: The client receives a message for an unknown topic
 Scenario: The client receives a message with an unknown action
 	When the server sends the message R|XXX+
 	Then the client throws a "MESSAGE_PARSE_ERROR" error with message "Unknown action XXX"
-
-#TODO Eventhandler needs to pass the client to convert typed
-#Scenario: The client receives a message with typed data, but an unknown type
-	#When the server sends the message E|EVT|someEvent|QXX+
-	#Then the client throws a MESSAGE_PARSE_ERROR error with message Unknown type XXX

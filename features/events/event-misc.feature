@@ -25,3 +25,8 @@ Scenario: The client attempts to subscribe to the same event multiple times
 #	When the client unsubscribes from an event named "test3"
 #		And the server sends the message E|E|NOT_SUBSCRIBED|test3+
 #	Then the client throws a "NOT_SUBSCRIBED" error with message "test3"
+
+#TODO Eventhandler needs to pass the client to convert typed
+#Scenario: The client receives a message with typed data, but an unknown type
+	#When the server sends the message E|EVT|someEvent|QXX+
+	#Then the client throws a MESSAGE_PARSE_ERROR error with message Unknown type XXX

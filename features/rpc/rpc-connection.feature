@@ -9,8 +9,8 @@ Scenario: The client is connected
 		And the client logs in with username "XXX" and password "YYY"
 		And the server sends the message A|A+
 
-Scenario: The client provides a rpc
-	When the client provides a rpc called "toUppercase"
+Scenario: The client provides a RPC
+	When the client provides a RPC called "toUppercase"
 	Then the last message the server recieved is P|S|toUppercase+
 
 Scenario: The client gets an ACK
@@ -30,5 +30,5 @@ Scenario: The client is connected
 		And the server sends the message A|A+
 	Then the clients connection state is "OPEN"
 
-Scenario: The client resends the rpc provider
+Scenario: The client resends the RPC provider
 	Then the server received the message P|S|toUppercase+

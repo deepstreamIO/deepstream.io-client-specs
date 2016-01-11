@@ -50,5 +50,4 @@ Scenario: The client resends the event listen
 	Then the server received the message E|L|eventPrefix/.*+
 
 Scenario: The client sends offline events
-	#TODO: Is this actually expected?
 	Then the server received the message E|EVT|test1|SyetAnotherValue+

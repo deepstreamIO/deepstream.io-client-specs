@@ -40,9 +40,7 @@ Scenario: The server does not respond in time with an ACK
 Scenario: The server does not recieve initial record data in time
  	When the server sends the message R|A|S|unhappyRecord+
  		And some time passes
- 	#TODO: readtimeout?
- 	# ACK_TIMEOUT is not too bad here, as it is the subscription that's being acknowledged
- 	# Response timeout is for rpc responses. Let's discuss
+ 	# TODO: Should this use another error code?
  	Then the client throws a "RESPONSE_TIMEOUT" error with message "unhappyRecord"
 
 Scenario: The server then recieves the initial record data
@@ -51,12 +49,6 @@ Scenario: The server then recieves the initial record data
 Scenario: The client sends an partial update
 	When the client sets the record "unhappyRecord" to {"reasons":["Just Because."]}
 	Then the last message the server recieved is R|U|unhappyRecord|101|{"reasons":["Just Because."]}+
-
-#@timeout
-#Scenario: The server does not respond in time with an ACK
-	#Given some time passes
-	#TODO: Do write acks actually exists?
-	#Then the client throws a ACK_TIMEOUT error with message unhappyRecord
 
 @timeout
 Scenario: The server send a cache retrieval timeout

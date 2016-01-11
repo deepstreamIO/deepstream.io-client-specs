@@ -1,7 +1,7 @@
 @rpc
 Feature: RPC Timeouts
 	Remote Procedure Calls are deepstream's concept of request-response 
-	communication. This requires a client that makes the rpc 
+	communication. This requires a client that makes the RPC 
 	(requestor or receiver) and another client that answers it (provider).
 
 	Whenever a provide or unprovide event does not recieve an 
@@ -16,18 +16,18 @@ Scenario: The client is connected
 
 # Making
 
-Scenario: The client makes an rpc
-	When the client requests rpc "toUppercase" with data "abc"
+Scenario: The client makes an RPC
+	When the client requests RPC "toUppercase" with data "abc"
 	Then the last message the server recieved is P|REQ|toUppercase|<UID>|Sabc+
 
 Scenario: The client receives a timeout
 	When some time passes
-	Then the client recieves an error rpc callback for "toUppercase" with the message "RESPONSE_TIMEOUT"
+	Then the client recieves an error RPC callback for "toUppercase" with the message "RESPONSE_TIMEOUT"
 
 # Providing
 
-Scenario: The client provides a rpc
-	When the client provides a rpc called "toUppercase"
+Scenario: The client provides a RPC
+	When the client provides a RPC called "toUppercase"
 	Then the last message the server recieved is P|S|toUppercase+
 
 @timeout
@@ -37,8 +37,8 @@ Scenario: The server does not respond in time with an ACK
 
 # Unproviding
 
-Scenario: The client stops providing a rpc
-	When the client stops providing a rpc called "toUppercase"
+Scenario: The client stops providing a RPC
+	When the client stops providing a RPC called "toUppercase"
 	Then the last message the server recieved is P|US|toUppercase+
 
 @timeout

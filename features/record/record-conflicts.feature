@@ -30,8 +30,6 @@ Scenario: The server responds with ack and read
  
  Scenario: The client sends an partial update
  	When the client sets the record "mergeRecord" "key" to "value4"
- 	#TODO:  this doesn't exist
- 	#And the server sends the message R|A|P|test1+
  
  Scenario: The client recieves an error saying version already exists
  	When the server sends the message R|E|VERSION_EXISTS|mergeRecord|102+

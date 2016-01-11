@@ -2,7 +2,10 @@ var server = require( './tcp-server' );
 var config = require( '../config' );
 var check = require( '../helper/helper' ).check;
 
+var uid;
+
 var matchMessage = function( actualMessage, expectedMessage ) {
+	var expectedMessageCopy = expectedMessage;
 	if( server.allMessages.length === 0 ) {
 		return 'Server did not recieve any messages';
 	}
@@ -11,8 +14,11 @@ var matchMessage = function( actualMessage, expectedMessage ) {
 	} else {
 		expectedMessage = expectedMessage.replace( /\|/g, '\\|' );
 		expectedMessage = expectedMessage.replace( '+', '\\+' );
-		expectedMessage = expectedMessage.replace( '<UID>', '.*' );
-		if( (new RegExp( expectedMessage ) ).test( convertChars( actualMessage ) ) ) {
+		expectedMessage = expectedMessage.replace( '<UID>', '([^\\|]*)' );
+
+		var match = convertChars( actualMessage ).match( new RegExp( expectedMessage ) );
+		if( match ) {
+			uid = match[ 1 ];
 			return;
 		} else {
 			return convertChars( actualMessage ) + ' did not match ' + expectedMessage;
@@ -27,6 +33,7 @@ var convertChars = function( input ) {
 };
 
 module.exports = function() {
+
 	this.Given( /the test server is ready/, function (callback) {
 		server.whenReady( callback );
 	});
@@ -38,8 +45,13 @@ module.exports = function() {
 	});
 
 	this.When( /^the server sends the message (.*)$/, function( message, callback ){
+		if( message.indexOf( '<UID>' ) !== -1 && uid ) {
+			message = message.replace( '<UID>', uid );
+		}
+
 		message = message.replace( /\|/g, String.fromCharCode( 31 ) );
 		message = message.replace( /\+/g, String.fromCharCode( 30 ) );
+
 		server.send( message );
 		setTimeout( callback, config.tcpMessageWaitTime );
 	});
@@ -69,20 +81,24 @@ module.exports = function() {
 		check( 'active connections', Number( connectionCount ), server.connectionCount, callback );
 	});
 
-	this.Then( /^the last message the server recieved is (.*)$/, function( message ){
-		return matchMessage( server.lastMessage, message );
+	this.Then( /^the last message the server recieved is (.*)$/, function( message, callback ){
+		callback( matchMessage( server.lastMessage, message ) );
 	});
 
 	this.Then( /^the server received the message (.*)$/, function( message, callback ) {
 		var matchFound = false;
 		for( var i=0; i<server.allMessages.length && !matchFound; i++) {
-			matchFound = !!matchMessage( server.allMessages[ i ], message );
+			matchFound = !matchMessage( server.allMessages[ i ], message );
 		}
-		callback( !matchFound && ( 'No match for message ' + message + ' found') );
+		callback( !matchFound && ( 'No match for message ' + message + ' found. Current messages: ' + server.allMessages ) );
 	} );
 
 	this.Then( /^the server has received (\d*) messages$/, function( numberOfMessages, callback ) {
 		check( 'number of received messages', Number( numberOfMessages ), server.allMessages.length, callback );
+	});
+
+	this.Then(/^the server did not recieve any messages$/, function (callback) {
+	  	check( 'number of received messages', 0, server.allMessages.length, callback );
 	});
 
 };

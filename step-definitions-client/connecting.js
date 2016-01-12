@@ -55,7 +55,7 @@ module.exports = function() {
 		check( 'connectionState', connectionState, global.dsClient.getConnectionState(), callback );
 	});
 
-	this.Then( /^the client throws a "(\w*)" error with message "(.*)"$/, function( error, errorMessage, callback ){
+	this.Then( /^the client throws a "(\w*)" error with message "(.*)"$/, function( error, errorMessage, callback ){console.log( error, errorMessage );
 		catchError = true;
 		var lastErrorArgs = errors[ errors.length - 1 ];		
 		

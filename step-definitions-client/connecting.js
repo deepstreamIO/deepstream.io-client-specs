@@ -39,6 +39,10 @@ module.exports = function() {
 	this.When( /^some time passes$/, function( callback ){
 		setTimeout( callback, 200 );
 	});
+
+	this.When( /^two seconds later$/, function( callback ){
+		setTimeout( callback, 2000 );
+	});
 	
 	this.When( /^the client logs in with username "(\w*)" and password "(\w*)"$/, function( username, password, callback ){
 		global.dsClient.login({ username: username, password: password }, function(){

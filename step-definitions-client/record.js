@@ -63,25 +63,21 @@ module.exports = function() {
 	* Subscribe
 	*/
 	this.When(/^the client subscribes to "([^"]*)" for the record "([^"]*)"$/, function (path, recordName, callback) {
-	  	subscribeCallback.reset();
 	  	records[ recordName ].subscribe( path, subscribeCallback );
 		setTimeout( callback, config.tcpMessageWaitTime );
 	});
 
 	this.When(/^the client unsubscribes to the entire record "([^"]*)" changes$/, function (recordName, callback) {
-	  	subscribeCallback.reset();
 	  	records[ recordName ].unsubscribe( subscribeCallback );
 		setTimeout( callback, config.tcpMessageWaitTime );
 	});
 
 	this.When(/^the client unsubscribes to "([^"]*)" for the record "([^"]*)"$/, function (path, recordName, callback) {
-	  	subscribeCallback.reset();
 	  	records[ recordName ].unsubscribe( path, subscribeCallback );
 		setTimeout( callback, config.tcpMessageWaitTime );
 	});
 
 	this.When(/^the client subscribes to the entire record "([^"]*)" changes$/, function (recordName, callback) {
-		subscribeCallback.reset();
 	  	records[ recordName ].subscribe( subscribeCallback );
 		setTimeout( callback, config.tcpMessageWaitTime );
 	});
@@ -93,16 +89,19 @@ module.exports = function() {
 	this.Then(/^the client will be notified of the record change$/, function () {
 		sinon.assert.calledOnce( subscribeCallback );
 		//sinon.assert.calledWith( subscribeCallback, record.get() );
+		subscribeCallback.reset();
 	});	
 
 	this.Then(/^the client will be notified of the second record change$/, function () {
-		sinon.assert.calledTwice( subscribeCallback );
+		sinon.assert.calledOnce( subscribeCallback );
 		//sinon.assert.calledWith( subscribeCallback, 5 );
+		subscribeCallback.reset();
 	});	
 
 	this.Then(/^the client will be notified of the partial record change$/, function () {
 		sinon.assert.calledOnce( subscribeCallback );
 		//sinon.assert.calledWith( subscribeCallback, record.get() );
+		subscribeCallback.reset();
 	});
 
 };

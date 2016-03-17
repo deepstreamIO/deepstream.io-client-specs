@@ -22,7 +22,7 @@ Scenario: The client listens to recordPrefix
 	When the client listens to a record matching "recordPrefix/.*"
 	Then the last message the server recieved is R|L|recordPrefix/.*+
 
-Scenario: The server responds with an ACK
+Scenario: The server responds with a listen ACK
 	Given the server sends the message R|A|L|recordPrefix/.*+
 
 Scenario: The client gets notified of new matching subscriptions
@@ -37,7 +37,7 @@ Scenario: The client unlistens to recordPrefix
 	When the client unlistens to a record matching "recordPrefix/.*"
 	Then the last message the server recieved is R|UL|recordPrefix/.*+
 
-Scenario: The server responds with an ACK
+Scenario: The server responds with an unlisten ACK
 	#TODO
 	#Given the server sends the message R|A|UL|recordPrefix/.*+
 

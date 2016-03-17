@@ -15,7 +15,7 @@ Scenario: The client listens to recordPrefix
 	Then the last message the server recieved is R|L|recordPrefix/.*+
 
 @timeout
-Scenario: The server does not respond in time with an ACK
+Scenario: The server does not respond in time with a listen ACK
 	When some time passes
 	Then the client throws a "ACK_TIMEOUT" error with message "No ACK message received in time for recordPrefix/.*"
 
@@ -24,6 +24,6 @@ Scenario: The client unlistens to recordPrefix
 	Then the last message the server recieved is R|UL|recordPrefix/.*+
 
 @timeout
-Scenario: The server does not respond in time with an ACK
+Scenario: The server does not respond in time with an unlisten ACK
 	#When some time passes
 	#Then the client throws a "ACK_TIMEOUT" error with message "No ACK message received in time for recordPrefix/.*"

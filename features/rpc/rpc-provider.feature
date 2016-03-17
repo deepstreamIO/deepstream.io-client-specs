@@ -28,15 +28,15 @@ Scenario: The client provides a RPC
 	When the client provides a RPC called "toUppercase"
 	Then the last message the server recieved is P|S|toUppercase+
 
-Scenario: The client gets an ACK
+Scenario: The client gets a subscribe ACK
  	When the server sends the message P|A|S|toUppercase+
 
 # Success
 
-Scenario: The client gets a supported request
+Scenario: The client gets a request that will succeed
  	When the server sends the message P|REQ|toUppercase|<UID>|Sabc+
 
-Scenario: The client responds with an ack and processes message
+Scenario: The client responds with an ack and processes message ( 1 )
 	Then the last message the server recieved is P|A|toUppercase|<UID>+
  		And the client recieves a request for a RPC called "toUppercase" with data "abc"
 
@@ -46,10 +46,10 @@ Scenario: The client responds with a success
 
 # Error
 
-Scenario: The client gets a supported request
+Scenario: The client gets a request that will error
  	When the server sends the message P|REQ|toUppercase|<UID>|Sabc+
 
-Scenario: The client responds with an ack and processes message
+Scenario: The client responds with an ack and processes message ( 2 )
 	Then the last message the server recieved is P|A|toUppercase|<UID>+
  		And the client recieves a request for a RPC called "toUppercase" with data "abc"
 
@@ -59,14 +59,14 @@ Scenario: The client responds with an error
 
 # Rejection when supported
 
-Scenario: The client gets a supported request
+Scenario: The client gets another supported request
  	When the server sends the message P|REQ|toUppercase|<UID>|Sabc+
 
-Scenario: The client responds with an ack and processes message
+Scenario: The client responds with an ack and processes message ( 3 )
 	Then the last message the server recieved is P|A|toUppercase|<UID>+
  		And the client recieves a request for a RPC called "toUppercase" with data "abc"
 
-Scenario: The client responds with an error
+Scenario: The client responds with an explicit rejection
 	When the client rejects the RPC "toUppercase"
  	Then the last message the server recieved is P|REJ|toUppercase|<UID>+
 
@@ -75,7 +75,7 @@ Scenario: The client responds with an error
 Scenario: The client gets an unsupported request
 	When the server sends the message P|REQ|unSupported|<UID>|Sabc+
 
-Scenario: The client responds a reject
+Scenario: The client responds with an implicit rejection
 	Then the last message the server recieved is P|REJ|unSupported|<UID>+
 
 # Unproviding
@@ -84,6 +84,5 @@ Scenario: The client stops providing a RPC
 	When the client stops providing a RPC called "toUppercase"
 	Then the last message the server recieved is P|US|toUppercase+
 
-Scenario: The client gets an ACK
+Scenario: The client gets an unprovide ACK
  	When the server sends the message P|A|US|toUppercase+
-	

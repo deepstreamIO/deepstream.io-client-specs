@@ -31,7 +31,7 @@ Scenario: The client is connected
 		And the server sends the message A|A+
 
 @timeout
-Scenario: The server does not respond in time with an ACK
+Scenario: The server does not respond in time with a record ACK
 	When the client creates a record named "unhappyRecord"
 		And some time passes
 	Then the client throws a "ACK_TIMEOUT" error with message "unhappyRecord"
@@ -65,7 +65,7 @@ Scenario: The client discards record
 	Then the last message the server recieved is R|US|unhappyRecord+
 
 @timeout
-Scenario: The server does not respond in time with an ACK
+Scenario: The server does not respond in time with an unsubscribe ACK
 	When some time passes
 	Then the client throws a "ACK_TIMEOUT" error with message "unhappyRecord"
 

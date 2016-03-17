@@ -31,7 +31,7 @@ Scenario: The client provides a RPC
 	Then the last message the server recieved is P|S|toUppercase+
 
 @timeout
-Scenario: The server does not respond in time with an ACK
+Scenario: The server does not respond in time with a subscribe ACK
 	When some time passes
 	Then the client throws a "ACK_TIMEOUT" error with message "No ACK message received in time for toUppercase"
 
@@ -42,7 +42,7 @@ Scenario: The client stops providing a RPC
 	Then the last message the server recieved is P|US|toUppercase+
 
 @timeout
-Scenario: The server does not respond in time with an ACK
+Scenario: The server does not respond in time with an unsubscribe ACK
 	When some time passes
 	Then the client throws a "ACK_TIMEOUT" error with message "No ACK message received in time for toUppercase"
 	

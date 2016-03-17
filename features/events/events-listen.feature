@@ -16,7 +16,7 @@ Scenario: The client listens to eventPrefix
 	When the client listens to events matching "eventPrefix/.*"
 	Then the last message the server recieved is E|L|eventPrefix/.*+
 
-Scenario: The server responds with an ACK
+Scenario: The server responds with a listen ACK
 	Given the server sends the message E|A|L|eventPrefix/.*+
 
 Scenario: The client gets notified of new matching subscriptions
@@ -31,7 +31,7 @@ Scenario: The client unlistens to eventPrefix
 	When the client unlistens to events matching "eventPrefix/.*"
 	Then the last message the server recieved is E|UL|eventPrefix/.*+
 
-Scenario: The server responds with an ACK
+Scenario: The server responds with a unlisten ACK
 	Given the server sends the message E|A|UL|eventPrefix/.*+
 
 Scenario: Following server updates will throw an error

@@ -15,7 +15,7 @@ Scenario: The client listens to eventPrefix
 	Then the last message the server recieved is E|L|eventPrefix/.*+
 
 @timeout
-Scenario: The server does not respond in time with an ACK
+Scenario: The server does not respond in time with a listen ACK
 	When some time passes
 	Then the client throws a "ACK_TIMEOUT" error with message "No ACK message received in time for eventPrefix/.*"
 
@@ -24,6 +24,6 @@ Scenario: The client unlistens to eventPrefix
 	Then the last message the server recieved is E|UL|eventPrefix/.*+
 
 @timeout
-Scenario: The server does not respond in time with an ACK
+Scenario: The server does not respond in time with an unlisten ACK
 	When some time passes
 	Then the client throws a "ACK_TIMEOUT" error with message "No ACK message received in time for eventPrefix/.*"

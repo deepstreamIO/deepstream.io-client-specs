@@ -39,7 +39,7 @@ Scenario: The client sends an partial update
 	When the client sets the record "happyRecord" "pets.0.name" to "Max"
 	Then the last message the server recieved is R|P|happyRecord|103|pets.0.name|SMax+
 
-Scenario: The client receives a full update
+Scenario: The client receives another full update
 	When the client sets the record "happyRecord" to {"name":"Smith","pets":[{"name":"Ruffus","type":"dog","age":5}]}
 	Then the last message the server recieved is R|U|happyRecord|104|{"name":"Smith","pets":[{"name":"Ruffus","type":"dog","age":5}]}+
 

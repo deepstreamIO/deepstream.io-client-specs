@@ -15,7 +15,7 @@ Scenario: The client subscribes to an event
 	Then the server received the message E|S|test1+ 
 
 @timeout
-Scenario: The server does not respond in time with an ACK
+Scenario: The server does not respond in time with a subscribe ACK
 	Given some time passes
 	Then the client throws a "ACK_TIMEOUT" error with message "No ACK message received in time for test1"
 
@@ -24,6 +24,6 @@ Scenario: The client unsubscribes from an event
 	Then the server received the message E|US|test1+
 
 @timeout
-Scenario: The server does not respond in time with an ACK
+Scenario: The server does not respond in time with an unsubscribe ACK
 	Given some time passes
 	Then the client throws a "ACK_TIMEOUT" error with message "No ACK message received in time for test1"

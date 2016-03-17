@@ -1,5 +1,5 @@
 @records
-Feature: Record
+Feature: Record Misc
 	This feature covers other possible scenarios that can occur, such 
 	as the client requesting the same record multiple times.
 

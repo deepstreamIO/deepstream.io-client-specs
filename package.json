@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://wolframhempel:arbiter27002837@github.com/hoxton-one/deepstream.io-client-specs.git"
+    "url": "git@github.com:deepstreamIO/deepstream.io-client-specs.git"
   },
   "author": "",
   "license": "MIT",

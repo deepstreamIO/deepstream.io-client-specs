@@ -1,7 +1,11 @@
-var server = require( './tcp-server' );
 var config = require( '../config' );
 var check = require( '../helper/helper' ).check;
 
+var TCPServer = require( './tcp-server' );  
+var firstServer = new TCPServer();
+var secondaryServer = new TCPServer( config.secondaryTestServerPort );
+
+var server = firstServer;
 var uid;
 
 var matchMessage = function( actualMessage, expectedMessage ) {
@@ -36,6 +40,14 @@ module.exports = function() {
 
 	this.Given( /the test server is ready/, function (callback) {
 		server.whenReady( callback );
+	});
+
+	this.Given( /the second test server is ready/, function (callback) {
+		secondaryServer.whenReady( callback );
+	});
+
+	this.Given( /the client is on the second server/, function () {
+		server = secondaryServer;
 	});
 
 	this.Given( /^the server resets its message count$/, function (callback) {
@@ -79,6 +91,10 @@ module.exports = function() {
 
 	this.Then( /^the server has (\d*) active connections$/, function( connectionCount, callback ){
 		check( 'active connections', Number( connectionCount ), server.connectionCount, callback );
+	});
+	
+	this.Then( /^the second server has (\d*) active connections$/, function( connectionCount, callback ){
+		check( 'active connections', Number( connectionCount ), secondaryServer.connectionCount, callback );
 	});
 
 	this.Then( /^the last message the server recieved is (.*)$/, function( message, callback ){

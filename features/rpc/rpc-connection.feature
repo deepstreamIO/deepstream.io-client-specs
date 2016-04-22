@@ -6,6 +6,7 @@ Feature: RPC Connectivity
 Scenario: The client is connected
 	Given the test server is ready
 		And the client is initialised
+		And the server sends the message C|A+
 		And the client logs in with username "XXX" and password "YYY"
 		And the server sends the message A|A+
 
@@ -24,6 +25,7 @@ Scenario: The client loses it connection to the server
 	
 Scenario: The client reconnects to the server
 	When the connection to the server is reestablished
+		And the server sends the message C|A+
 	Then the clients connection state is "AUTHENTICATING"
 
 Scenario: The client successfully reconnects

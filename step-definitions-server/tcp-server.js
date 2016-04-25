@@ -9,7 +9,6 @@ function TCPServer( tcpPort ) {
 
 	this.allMessages = [];
 	this.lastMessage = null;
-	this.connectionCount = 0;
 
 	this.tcpPort = tcpPort || config.testServerPort;
 }
@@ -23,8 +22,7 @@ TCPServer.prototype.start = function() {
 };
 
 TCPServer.prototype.stop = function( callback ) {
-	this.server.on( 'close', callback );
-	this.stop();
+	this.stop( callback );
 }
 
 TCPServer.prototype.send = function( message ) {
@@ -39,7 +37,7 @@ TCPServer.prototype.whenReady = function( callback ) {
 	if( this.isReady ) {
 		callback();
 	} else {
-		this.server.on( 'listening', callback );
+		this.server.once( 'listening', callback );
 	}
 };
 
@@ -50,32 +48,29 @@ TCPServer.prototype.start = function() {
 	this.server.listen( this.tcpPort, config.testServerHost );
 }
 
-TCPServer.prototype.stop = function() {
+TCPServer.prototype.stop = function( callback ) {
 	this.isReady = false;
 
 	this.allMessages = [];
 	this.lastMessage = null;
-	this.connectionCount = 0;
 
-	this.server.close();
 	this.connections.forEach( function( connection ) {
-		connection.destroy();
+		connection.end();
 	} );
-
+	this.server.close( callback );
 	this.server = null;
 }
 
 TCPServer.prototype.bindSocket = function( socket ) {
-	this.connectionCount++;
 	this.lastSocket = socket;
 	socket.setEncoding( 'utf8' );
 	socket.on( 'data', this.onIncomingMessage.bind( this ) );
-	socket.on( 'end', this.onDisconnect.bind( this ) );
+	socket.on( 'close', this.onDisconnect.bind( this, socket ) );
 	this.connections.push( socket );
 }
 
-TCPServer.prototype.onDisconnect = function() {
-	this.connectionCount--;
+TCPServer.prototype.onDisconnect = function( socket ) {
+	this.connections.splice( this.connections.indexOf( socket ), 1);
 }
 
 TCPServer.prototype.onIncomingMessage = function( message ) {

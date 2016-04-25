@@ -6,7 +6,6 @@ Feature: Redirecting a client to another deepstream
 Scenario: The test server is idle and awaits connections
 	Given the test server is ready
 	Given the second test server is ready
-	Then the server has 0 active connections
 		And the second server has 0 active connections
 
 Scenario: The client is instantiated and creates a tcp connection

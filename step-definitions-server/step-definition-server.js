@@ -39,6 +39,7 @@ var convertChars = function( input ) {
 module.exports = function() {
 
 	this.Given( /the test server is ready/, function (callback) {
+		server = firstServer;
 		server.whenReady( callback );
 	});
 
@@ -75,12 +76,12 @@ module.exports = function() {
 	this.When(/^the connection to the server is reestablished$/, function ( callback ) {
 		function hasAClient() {
 			setTimeout( function() {
-				if( server.connectionCount > 0 ) {
+				if( server.connections.length > 0 ) {
 					callback();
 				} else {
 					hasAClient();		
 				}
-			}, 100 );
+			}, 250 );
 		}
 		server.whenReady( hasAClient, 100 );
 	});
@@ -90,11 +91,11 @@ module.exports = function() {
 	});
 
 	this.Then( /^the server has (\d*) active connections$/, function( connectionCount, callback ){
-		check( 'active connections', Number( connectionCount ), server.connectionCount, callback );
+		check( 'active connections', Number( connectionCount ), server.connections.length, callback );
 	});
 	
 	this.Then( /^the second server has (\d*) active connections$/, function( connectionCount, callback ){
-		check( 'active connections', Number( connectionCount ), secondaryServer.connectionCount, callback );
+		check( 'active connections', Number( connectionCount ), secondaryServer.connections.length, callback );
 	});
 
 	this.Then( /^the last message the server recieved is (.*)$/, function( message, callback ){

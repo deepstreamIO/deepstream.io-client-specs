@@ -2,7 +2,7 @@ var config = require( '../config' );
 var check = require( '../helper/helper' ).check;
 
 var TCPServer = require( './tcp-server' );  
-var firstServer = new TCPServer();
+var firstServer = new TCPServer( config.firstTestServerPort );
 var secondaryServer = new TCPServer( config.secondaryTestServerPort );
 
 var server = firstServer;
@@ -13,12 +13,13 @@ var matchMessage = function( actualMessage, expectedMessage ) {
 	if( server.allMessages.length === 0 ) {
 		return 'Server did not recieve any messages';
 	}
-	else if( expectedMessage.indexOf( '<UID>' ) === -1 ) {
+	else if( expectedMessage.indexOf( '<UID>' ) === -1 && expectedMessage.indexOf( '<FIRST_SERVER_URL>' ) === -1 ) {
 		return check( 'last received message', expectedMessage, convertChars( actualMessage ) );
 	} else {
 		expectedMessage = expectedMessage.replace( /\|/g, '\\|' );
 		expectedMessage = expectedMessage.replace( '+', '\\+' );
 		expectedMessage = expectedMessage.replace( '<UID>', '([^\\|]*)' );
+		expectedMessage = expectedMessage.replace( '<FIRST_SERVER_URL>', 'localhost:' + config.testServerPort );
 
 		var match = convertChars( actualMessage ).match( new RegExp( expectedMessage ) );
 		if( match ) {
@@ -60,6 +61,10 @@ module.exports = function() {
 	this.When( /^the server sends the message (.*)$/, function( message, callback ){
 		if( message.indexOf( '<UID>' ) !== -1 && uid ) {
 			message = message.replace( '<UID>', uid );
+		}
+
+		if( message.indexOf( '<SECOND_SERVER_URL>' ) !== -1 ) {
+			message = message.replace( '<SECOND_SERVER_URL>', 'localhost:' + config.secondaryTestServerPort );
 		}
 
 		message = message.replace( /\|/g, String.fromCharCode( 31 ) );

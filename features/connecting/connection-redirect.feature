@@ -1,6 +1,6 @@
 @connectivity
 Feature: Redirecting a client to another deepstream
-	The client should be able to recieved a connection redirect
+	The client should be able to recieve a connection redirect
 	to allow it to connect to a seperate deepstream url if needed
 
 Scenario: The test server is idle and awaits connections
@@ -14,8 +14,13 @@ Scenario: The client is instantiated and creates a tcp connection
 	Then the server has 1 active connections
 		And the clients connection state is "AWAITING_CONNECTION"
 
+Scenario: The server challenges the client to show which url it wants to connect to
+	When the server sends the message C|CH+
+	Then the last message the server recieved is C|CHR|<FIRST_SERVER_URL>+
+		And the clients connection state is "CHALLENGING"
+
 Scenario: The client attempts to connect to the other server when it recieves a redirect
-	When the server sends the message C|R|localhost:8888+
+	When the server sends the message C|RED|<SECOND_SERVER_URL>+
 	And the server has 0 active connections
 	When some time passes
 	Then the server has 0 active connections

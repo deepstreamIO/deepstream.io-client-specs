@@ -42,7 +42,6 @@ module.exports = function() {
 
 	this.Then(/^the client will be notified of new event match "([^"]*)"$/, function ( eventName) {
 		sinon.assert.calledWith( listenCallback, eventName, true );
-
 	});
 
 	this.Then(/^the client will be notified of event match removal "([^"]*)"$/, function (eventName) {

@@ -9,6 +9,7 @@ Feature: Logging In
 Scenario: The client sends login credentials
 	Given the test server is ready
 		And the client is initialised
+		And the server sends the message C|A+
 	When the client logs in with username "XXX" and password "YYY"
 	Then the last message the server recieved is A|REQ|{"username":"XXX","password":"YYY"}+
 		And the clients connection state is "AUTHENTICATING"

@@ -1,89 +1,91 @@
 var net = require('net');
 var config = require( '../config' );
-var server;
-var isReady = false;
-var lastSocket;
-var connections = [];
 
-exports.allMessages = [];
-exports.lastMessage = null;
-exports.connectionCount = 0;
+function TCPServer( tcpPort ) {
+	this.server;
+	this.isReady = false;
+	this.lastSocket;
+	this.connections = [];
 
-exports.start = function() {
-	if( server ) {
-		stop( start );
+	this.allMessages = [];
+	this.lastMessage = null;
+
+	this.tcpPort = tcpPort || config.testServerPort;
+}
+
+TCPServer.prototype.start = function() {
+	if( this.server ) {
+		this.stop( this.start.bind( this ) );
 	} else { 
-		start();
+		this.start();
 	}
 };
 
-exports.stop = function( callback ) {
-	server.on( 'close', callback );
-	stop();
+TCPServer.prototype.stop = function( callback ) {
+	this.stop( callback );
+}
+
+TCPServer.prototype.send = function( message ) {
+	this.lastSocket.write( message );
 };
 
-exports.send = function( message ) {
-	lastSocket.write( message );
-};
-
-exports.whenReady = function( callback ) {
-	if( !server ) {
-		start();
+TCPServer.prototype.whenReady = function( callback ) {
+	if( !this.server ) {
+		this.start();
 	}
 
-	if( isReady ) {
+	if( this.isReady ) {
 		callback();
 	} else {
-		server.on( 'listening', callback );
+		this.server.once( 'listening', callback );
 	}
 };
 
-function start() {
-	server = net.createServer();
-	server.on( 'connection', bindSocket );
-	server.on( 'listening', onListening );
-	server.listen( config.testServerPort, config.testServerHost );
+TCPServer.prototype.start = function() {
+	this.server = net.createServer();
+	this.server.on( 'connection', this.bindSocket.bind( this ) );
+	this.server.on( 'listening', this.onListening.bind( this ) );
+	this.server.listen( this.tcpPort, config.testServerHost );
 }
 
-function stop() {
-	isReady = false;
+TCPServer.prototype.stop = function( callback ) {
+	this.isReady = false;
 
-	exports.allMessages = [];
-	exports.lastMessage = null;
-	exports.connectionCount = 0;
+	this.allMessages = [];
+	this.lastMessage = null;
 
-	server.close();
-	connections.forEach( function( connection ) {
-		connection.destroy();
+	this.connections.forEach( function( connection ) {
+		connection.end();
 	} );
-
-	server = null;
+	this.server.close( callback );
+	this.server = null;
 }
 
-function bindSocket( socket ) {
-	exports.connectionCount++;
-	lastSocket = socket;
+TCPServer.prototype.bindSocket = function( socket ) {
+	this.lastSocket = socket;
 	socket.setEncoding( 'utf8' );
-	socket.on( 'data', onIncomingMessage );
-	socket.on( 'end', onDisconnect );
-	connections.push( socket );
+	socket.on( 'data', this.onIncomingMessage.bind( this ) );
+	socket.on( 'close', this.onDisconnect.bind( this, socket ) );
+	this.connections.push( socket );
 }
 
-function onDisconnect() {
-	exports.connectionCount--;
+TCPServer.prototype.onDisconnect = function( socket ) {
+	this.connections.splice( this.connections.indexOf( socket ), 1);
 }
 
-function onIncomingMessage( message ) {
+TCPServer.prototype.onIncomingMessage = function( message ) {
 	var messages = message.split( String.fromCharCode( 30 ) );
 	if( !messages[ messages.length - 1 ] ) {
 		messages.splice( messages.length - 1, 1 );
 	}
 	for( var i=0; i<messages.length; i++) {
-		exports.allMessages.push( messages[ i ] + String.fromCharCode( 30 ) );
+		this.allMessages.push( messages[ i ] + String.fromCharCode( 30 ) );
 	}
-	exports.lastMessage = messages[ messages.length - 1 ] + String.fromCharCode( 30 );
+	this.lastMessage = messages[ messages.length - 1 ] + String.fromCharCode( 30 );
 }
 
-function onListening() {
-	isReady = true;
+TCPServer.prototype.onListening = function() {
+	this.isReady = true;
 }
+
+module.exports = TCPServer;

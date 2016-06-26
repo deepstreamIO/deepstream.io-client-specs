@@ -26,7 +26,7 @@ Scenario: The client makes an RPC that will succeed
 	Then the last message the server recieved is P|REQ|toUppercase|<UID>|Sabc+
 
 Scenario: The client gets a request ACK ( 1 )
-	When the server sends the message P|A|REQ|<UID>+
+	When the server sends the message P|A|toUppercase|<UID>+
 
 Scenario: The client receives a succesful response
 	When the server sends the message P|RES|toUppercase|<UID>|SABC+
@@ -39,7 +39,7 @@ Scenario: The client makes an RPC that will fail
 	Then the last message the server recieved is P|REQ|toUppercase|<UID>|Sabc+
 
 Scenario: The client gets a request ACK ( 2 )
-	When the server sends the message P|A|REQ|<UID>+
+	When the server sends the message P|A|toUpperCase|<UID>+
 
 Scenario: The client receives an error response
 	When the server sends the message P|E|RPC Error Message|toUppercase|<UID>+

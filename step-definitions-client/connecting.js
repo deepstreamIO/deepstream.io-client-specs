@@ -43,7 +43,7 @@ module.exports = function() {
 	this.When( /^two seconds later$/, function( callback ){
 		setTimeout( callback, 2000 );
 	});
-	
+
 	this.When( /^the client logs in with username "(\w*)" and password "(\w*)"$/, function( username, password, callback ){
 		global.dsClient.login({ username: username, password: password }, function(){
 			lastAuthArgs = arguments;
@@ -59,10 +59,10 @@ module.exports = function() {
 		check( 'connectionState', connectionState, global.dsClient.getConnectionState(), callback );
 	});
 
-	this.Then( /^the client throws a "(\w*)" error with message "(.*)"$/, function( error, errorMessage, callback ){console.log( error, errorMessage );
+	this.Then( /^the client throws a "(\w*)" error with message "(.*)"$/, function( error, errorMessage, callback ){
 		catchError = true;
-		var lastErrorArgs = errors[ errors.length - 1 ];		
-		
+		var lastErrorArgs = errors[ errors.length - 1 ];
+
 		if( errors.length === 0 ) {
 			callback( 'No errors were thrown' );
 			return;
@@ -78,9 +78,9 @@ module.exports = function() {
 		callback();
 	});
 
-	this.Then( /^the last login failed with error "(\w*)" and message "(.*)"$/, function( error, errorMessage, callback ){
+	this.Then( /^the last login failed with error message "(.*)"$/, function( errorMessage, callback ){
 		catchError = true;
-		check( 'last auth error', error, lastAuthArgs[ 1 ], callback, true );
-		check( 'last auth error message', errorMessage, lastAuthArgs[ 2 ], callback );
+		//check( 'last auth error', error, lastAuthArgs[ 1 ], callback, true );
+		check( 'last auth error message', errorMessage, lastAuthArgs[ 1 ], callback );
 	});
 };

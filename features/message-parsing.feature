@@ -1,7 +1,8 @@
 @parsing
 Feature: Parsing Messages
-	Every message from that's received from the server is validated 
-	for some basic syntactic and semantic criteria
+	Every message from that's received from the
+	server is validated for some basic syntactic
+	and semantic criteria
 
 Background:
 	Given the test server is ready

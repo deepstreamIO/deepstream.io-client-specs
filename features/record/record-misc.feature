@@ -1,18 +1,21 @@
 @records
 Feature: Record Misc
-	This feature covers other possible scenarios that can occur, such 
+	This feature covers other possible scenarios that can occur, such
 	as the client requesting the same record multiple times.
 
-Scenario: The client is connected
+Scenario: Requesting record multiple times
+	The client attempts to request the same record
+	multiple times. This should still only trigger
+	a single subscribe message to the server and
+	the incoming events should be multiplexed on
+	the client
+
+	# The client is connected
 	Given the test server is ready
 		And the client is initialised
 		And the server sends the message C|A+
 		And the client logs in with username "XXX" and password "YYY"
 		And the server sends the message A|A+
-
-Scenario: The client attempts to request the same record multiple times. This should still
-		only trigger a single subscribe message to the server and the incoming events should
-		be multiplexed on the client
 
 	Given the server resets its message count
 	When the client creates a record named "doubleRecord"

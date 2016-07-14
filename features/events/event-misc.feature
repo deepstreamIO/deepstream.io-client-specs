@@ -1,22 +1,23 @@
 @events
 Feature: Events Misc
-	This feature covers other possible scenarios that can occur, such as 
+	This feature covers other possible scenarios that can occur, such as
 	attempting to unsubscribe to an event that you haven't subscribed to.
 
-Scenario: The client is connected
+Scenario: The client attempts to subscribe to the same event multiple times
+	only triggers a single subscribe message to the server and the
+	incoming events should be multiplexed on the client
+
+	# User logs in
 	Given the test server is ready
 		And the client is initialised
 		And the server sends the message C|A+
 		And the client logs in with username "XXX" and password "YYY"
 		And the server sends the message A|A+
 
-Scenario: The client attempts to subscribe to the same event multiple times
-		  only triggers a single subscribe message to the server and the incoming events should
-		  be multiplexed on the client
-
+	# User subscribes multiple time to same event
 	Given the server resets its message count
 	When the client subscribes to an event named "test2"
-		And the server sends the message E|A|S|test2+		
+		And the server sends the message E|A|S|test2+
 		And the client subscribes to an event named "test2"
 	Then the server received the message E|S|test2+
 		And the server has received 1 messages

@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/hoxton-one/deepstream.io-client-specs#readme",
   "devDependencies": {
-    "cucumber": "^1.0.0",
+    "cucumber": "^1.3.0",
     "deepstream.io-client-js": "latest"
   },
   "dependencies": {

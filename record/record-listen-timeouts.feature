@@ -20,7 +20,7 @@ Scenario: Record Listen Timeouts
 
 	# The server does not respond in time with a listen ACK
 	When some time passes
-	Then the client throws a "ACK_TIMEOUT" error with message "No ACK message received in time for recordPrefix/.*"
+	Then the client throws a "ACK_TIMEOUT" error with message "No ACK message received in time for LISTEN recordPrefix/.*"
 
 	# The client unlistens to recordPrefix
 	When the client unlistens to a record matching "recordPrefix/.*"

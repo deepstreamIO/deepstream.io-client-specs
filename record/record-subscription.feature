@@ -47,7 +47,7 @@ Scenario: Record Subscription
 	Then the client will be notified of the record change
 
 	# The client record subscribeRecord receives partial data it will notify subscribers
-	When the server sends the message R|P|subscribeRecord|126|pets.0.name|SRuffusTheSecond+
+	When the server sends the message R|P|subscribeRecord|126|pets[0].name|SRuffusTheSecond+
 	Then the client will be notified of the partial record change
 
 	# The client will no longer get notified after it unsubscribes
@@ -55,10 +55,10 @@ Scenario: Record Subscription
 	When the server sends the message R|U|subscribeRecord|127|{"name":"Smith","pets":[{"name":"Ruffus","type":"dog","age":1}]}+
 	Then the client will not be notified of the record change
 
-# Path Susbcribe
+# Path Subscribe
 
 	# The client subscribes subscribeRecord to the path pets.0
-	When the client subscribes to "pets.0.age" for the record "subscribeRecord"
+	When the client subscribes to "pets[0].age" for the record "subscribeRecord"
 	Then the client will not be notified of the record change
 
 	# The client receives an partial update unrelated to the path subscribed to
@@ -70,7 +70,7 @@ Scenario: Record Subscription
 	Then the client will not be notified of the record change
 
 	# The client receives an partial update related to the path subscribed to
-	When the server sends the message R|P|subscribeRecord|130|pets.0.age|N4+
+	When the server sends the message R|P|subscribeRecord|130|pets[0].age|N4+
 	Then the client will be notified of the record change
 
 	# The client receives an full update where the pets has changed
@@ -78,6 +78,6 @@ Scenario: Record Subscription
 	Then the client will be notified of the second record change
 
 	# The client will no longer get notified after it unsubscribes to the path
-	Given the client unsubscribes to "pets.0.age" for the record "subscribeRecord"
-	When the server sends the message R|P|subscribeRecord|132|pets.0.age|N6+
+	Given the client unsubscribes to "pets[0].age" for the record "subscribeRecord"
+	When the server sends the message R|P|subscribeRecord|132|pets[0].age|N6+
 	Then the client will not be notified of the record change

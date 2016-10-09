@@ -46,7 +46,8 @@ Scenario: Record Listen
 	Then the last message the server recieved is R|UL|recordPrefix/.*+
 
 	# The server responds with an unlisten ACK
-	Given the server sends the message R|A|UL|recordPrefix/.*+
+	#TODO
+	#Given the server sends the message R|A|UL|recordPrefix/.*+
 
 	# Following server updates will throw an error
 	Given the server sends the message R|SP|recordPrefix/.*|recordPrefix/foundAMatch+

@@ -10,7 +10,7 @@ Scenario: Redirecting a client to another deepstream
 	Given the second test server is ready
 		And the second server has 0 active connections
 
-# The client is instantiated and creates a tcp connection
+# The client is instantiated and creates a connection
 	Given the test server is ready
 		And the client is initialised
 	Then the server has 1 active connections

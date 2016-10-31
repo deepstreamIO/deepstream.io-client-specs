@@ -45,7 +45,7 @@ Scenario: RPC Provider
  	When the server sends the message P|REQ|toUppercase|<UID>|Sabc+
 
 	# The client responds with an ack and processes message ( 1 )
-	Then the last message the server recieved is P|A|toUppercase|<UID>+
+	Then the last message the server recieved is P|A|REQ|toUppercase|<UID>+
  		And the client recieves a request for a RPC called "toUppercase" with data "abc"
 
 	# The client responds with a success
@@ -58,7 +58,7 @@ Scenario: RPC Provider
  	When the server sends the message P|REQ|toUppercase|<UID>|Sabc+
 
 	# The client responds with an ack and processes message ( 2 )
-	Then the last message the server recieved is P|A|toUppercase|<UID>+
+	Then the last message the server recieved is P|A|REQ|toUppercase|<UID>+
  		And the client recieves a request for a RPC called "toUppercase" with data "abc"
 
 	# The client responds with an error
@@ -71,7 +71,7 @@ Scenario: RPC Provider
  	When the server sends the message P|REQ|toUppercase|<UID>|Sabc+
 
 	# The client responds with an ack and processes message ( 3 )
-	Then the last message the server recieved is P|A|toUppercase|<UID>+
+	Then the last message the server recieved is P|A|REQ|toUppercase|<UID>+
  		And the client recieves a request for a RPC called "toUppercase" with data "abc"
 
 	# The client responds with an explicit rejection

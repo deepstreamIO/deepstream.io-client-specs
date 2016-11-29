@@ -12,17 +12,17 @@ Scenario: Querying
 		And the client logs in with username "XXX" and password "YYY"
 		And the server sends the message A|A+
 
-# Happy Path
+	# Happy Path
 	# The client queries for clients when none connected
 	Given the client queries for connected clients
 	Then the server received the message U|Q|Q+
 
-    When the server sends the message U|Q+
-    Then the client is notified that no clients are connected
+	When the server sends the message U|Q+
+	Then the client is notified that no clients are connected
 
 	# Client queries for clients with multiple connectd
-   	Given the client queries for connected clients
-    Then the server received the message U|Q|Q+
-	
-    When the server sends the message U|Q|Homer|Marge|Bart+
-    Then the client is notified that clients "Homer,Marge,Bart" are connected
+	Given the client queries for connected clients
+	Then the server received the message U|Q|Q+
+
+	When the server sends the message U|Q|Homer|Marge|Bart+
+	Then the client is notified that clients "Homer,Marge,Bart" are connected

@@ -31,8 +31,3 @@ Scenario: Record Snapshot
 
     When the server sends the message R|R|snapshotRecord|100|{"name":"John"}+
     Then the client is provided the snapshot for record "snapshotRecord" with data "{"name":"John"}"
-
-    # The client checks for a record that has been loaded locally
-	Given the client checks if the server has the record "snapshotRecord"
-	Then the server didn't receive the message R|US|snapshotRecord+
-	Then the client is told the record "snapshotRecord" exists

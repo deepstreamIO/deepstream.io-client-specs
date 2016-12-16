@@ -30,13 +30,13 @@ Scenario: Record
 	When the client sets the record "happyRecord" "pets.0.name" to "Max"
 	Then the last message the server recieved is R|P|happyRecord|101|pets.0.name|SMax|{"writeSuccess":true}+
 
-	Then the server sends the message R|WS|happyRecord|O[101]|L+
+	Then the server sends the message R|WA|happyRecord|[101]|L+
 	Then the client is notified that the record "happyRecord" was written without error
 	
 	# The client sends update and gets acknowledgement
 	When the client sets the record "happyRecord" to {"newData":"someValue"}
 	Then the last message the server recieved is R|U|happyRecord|102|{"newData":"someValue"}|{"writeSuccess":true}+
-	Then the server sends the message R|WS|happyRecord|O[102]|L+
+	Then the server sends the message R|WA|happyRecord|[102]|L+
 	Then the client is notified that the record "happyRecord" was written without error
 
 	Then the client record "happyRecord" data is {"newData":"someValue"}
@@ -44,13 +44,13 @@ Scenario: Record
 	# Sends update but gets an error
 	When the client sets the record "happyRecord" to {"validData":"newErrorData"}
 	Then the last message the server recieved is R|U|happyRecord|103|{"validData":"newErrorData"}|{"writeSuccess":true}+
-	Then the server sends the message R|WS|happyRecord|O[103]|SError writing record to storage+
+	Then the server sends the message R|WA|happyRecord|[103]|SError writing record to storage+
 	Then the client is notified that the record "happyRecord" was written with error "Error writing record to storage"
 
 	# Sends patch but gets an error
 	When the client sets the record "happyRecord" "validData" to "differentData"
 	Then the last message the server recieved is R|P|happyRecord|104|validData|SdifferentData|{"writeSuccess":true}+
-	Then the server sends the message R|WS|happyRecord|O[104]|SError writing record to cache+
+	Then the server sends the message R|WA|happyRecord|[104]|SError writing record to cache+
 	Then the client is notified that the record "happyRecord" was written with error "Error writing record to cache"
 
 	# Gets version conflict but reconciles and receives write acknowledgement
@@ -58,5 +58,5 @@ Scenario: Record
 	Then the last message the server recieved is R|P|happyRecord|105|validData|SsomeData|{"writeSuccess":true}+
 	Then the server sends the message R|E|VERSION_EXISTS|happyRecord|105|{"validData":"newErrorData"}|{"writeSuccess":true}+
 	Then the last message the server recieved is R|U|happyRecord|106|{"validData":"newErrorData"}|{"writeSuccess":true}+
-	Then the server sends the message R|WS|happyRecord|O[106]|L+
+	Then the server sends the message R|WA|happyRecord|[106]|L+
 	Then the client is notified that the record "happyRecord" was written without error

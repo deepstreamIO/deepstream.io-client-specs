@@ -11,9 +11,8 @@ Scenario: Redirecting the client to another deepstream gets rejected
 		And the second server has 0 active connections
 
 # The client is instantiated and creates a connection
-	Given the test server is ready
-		And the client is initialised
-	Then the server has 1 active connections
+	Given the client is initialised
+		Then the server has 1 active connections
 		And the clients connection state is "AWAITING_CONNECTION"
 
 # The server challenges the client to show which url it wants to connect to

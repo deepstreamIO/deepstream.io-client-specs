@@ -18,7 +18,7 @@ Scenario: Record write acknowledgement
 
 	# The client creates a record and requires write acknowledgement
 	Given the client creates a record named "happyRecord"
-    And the client requires write acknowledgement on record "happyRecord"
+	And the client requires write acknowledgement on record "happyRecord"
 	Then the last message the server recieved is R|CR|happyRecord+
 	Then the server sends the message R|A|S|happyRecord+
 

@@ -1,5 +1,5 @@
-@records
-Feature: Record
+@records @write-ack
+Feature: Record write acknowledgement
 	Write acknowledgement when setting a record
 	allows users to pass a callback to the set method
 	of a record.
@@ -7,7 +7,7 @@ Feature: Record
 	It will be called with any errors while setting
 	the record
 
-Scenario: Record
+Scenario: Record write acknowledgement
 
 	# The client is connected
 	Given the test server is ready

@@ -9,34 +9,25 @@ Feature: Record Conflicts
 	If a conflict does occur, the client should
 	recieve a VERSION_EXISTS error.
 
-Scenario: Record Conflicts
+	Background: 
+	  Given the test server is ready
+	  And the client is initialised
+	  And the server sends the message C|A+
+	  And the client logs in with username "XXX" and password "YYY"
+	  And the server sends the message A|A+
+	  And the client creates a record named "mergeRecord"
+	  When the server sends the message R|A|S|mergeRecord+
+	  And the server sends the message R|R|mergeRecord|100|{"key":"value1"}+
+	
+	Scenario: Record Conflicts
 
-	# The client is connected
-	Given the test server is ready
-		And the client is initialised
-		And the server sends the message C|A+
-		And the client logs in with username "XXX" and password "YYY"
-		And the server sends the message A|A+
+	  # The client tries to set an out of date value
+	  Given the client sets the record "mergeRecord" "key" to "value3"
+	  When the server sends the message R|E|VERSION_EXISTS|mergeRecord|101|{"key":"value2"}+
+	  Then the last message the server recieved is R|U|mergeRecord|102|{"key":"value2"}+
 
-	# The server requests a record
-	Given the client creates a record named "mergeRecord"
+	Scenario: Record conflict from update
 
-	# The server responds with ack and read
-	When the server sends the message R|A|S|mergeRecord+
-	And the server sends the message R|R|mergeRecord|100|{"key":"value1"}+
-
-	# The client tries to set an out of date value
-	Given the client sets the record "mergeRecord" "key" to "value3"
-	When the server sends the message R|E|VERSION_EXISTS|mergeRecord|101|{"key":"value2"}+
-	Then the last message the server recieved is R|U|mergeRecord|102|{"key":"value2"}+
-
-	# The client recieves an out of sync update
-	When the server sends the message R|U|mergeRecord|102|{"key":"value3"}+
-	Then the last message the server recieved is R|U|mergeRecord|103|{"key":"value3"}+
-
-	# The client checks record data
-	Then the client record "mergeRecord" data is {"key":"value3"}
-
-	# The client receives a correct update
-	When the server sends the message R|U|mergeRecord|104|{"key":"value4"}+
-	Then the client record "mergeRecord" data is {"key":"value4"} 
+	  # The client recieves an out of sync update
+	  When the server sends the message R|U|mergeRecord|100|{"key":"value3"}+
+	  Then the last message the server recieved is R|U|mergeRecord|101|{"key":"value3"}+

@@ -19,7 +19,7 @@ Feature: Record Conflicts
 	  When the server sends the message R|A|S|mergeRecord+
 	  And the server sends the message R|R|mergeRecord|100|{"key":"value1"}+
 	
-	Scenario: Record Conflicts
+	Scenario: Record conflict on set
 
 	  # The client tries to set an out of date value
 	  Given the client sets the record "mergeRecord" "key" to "value3"

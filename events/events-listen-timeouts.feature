@@ -17,7 +17,7 @@ Feature: Event Listen Timeouts
 
 	# The client listens to eventPrefix
 		When the client listens to events matching "eventPrefix/.*"
-		Then the last message the server recieved is E|L|eventPrefix/.*+
+		Then the last message the server received is E|L|eventPrefix/.*+
 
 	# The server does not respond in time with a listen ACK
 		When some time passes
@@ -25,7 +25,7 @@ Feature: Event Listen Timeouts
 
 	# The client unlistens to eventPrefix
 		When the client unlistens to events matching "eventPrefix/.*"
-		Then the last message the server recieved is E|UL|eventPrefix/.*+
+		Then the last message the server received is E|UL|eventPrefix/.*+
 
 	 # The server does not respond in time with an unlisten ACK
 		When some time passes

@@ -22,7 +22,7 @@ Scenario: Record Connectivity
 
 	# The client creates a record
 	Given the client creates a record named "connectionRecord"
-	Then the last message the server recieved is R|CR|connectionRecord+
+	Then the last message the server received is R|CR|connectionRecord+
 
 	# The server sends a read ACK and read message for connectionRecord
 	Given the server sends the message R|A|S|connectionRecord+
@@ -30,7 +30,7 @@ Scenario: Record Connectivity
 
 	# The client listens to recordPrefix
 	When the client listens to a record matching "recordPrefix/.*"
-	Then the last message the server recieved is R|L|recordPrefix/.*+
+	Then the last message the server received is R|L|recordPrefix/.*+
 
 	# The server responds with an ACK
 	Given the server sends the message R|A|L|recordPrefix/.*+

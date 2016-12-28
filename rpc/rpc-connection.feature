@@ -1,6 +1,6 @@
 @rpc
 Feature: RPC Connectivity
-	RPC providers must be resent to the server after connection issues to guarantee it continues to recieve requests correctly.
+	RPC providers must be resent to the server after connection issues to guarantee it continues to receive requests correctly.
 
 Scenario: RPC Connectivity
 
@@ -13,7 +13,7 @@ Scenario: RPC Connectivity
 
 	# The client provides a RPC
 	When the client provides a RPC called "toUppercase"
-	Then the last message the server recieved is P|S|toUppercase+
+	Then the last message the server received is P|S|toUppercase+
 
 	# The client gets an ACK
  	When the server sends the message P|A|S|toUppercase+

@@ -7,9 +7,9 @@ Feature: Record
 
 	The actions that can be performed on a record
 	are:
-	- Request a record to recieve the current
+	- Request a record to receive the current
 	state and subcribe
-	- Send or Recieve updates to the record
+	- Send or Receive updates to the record
 	- Discard the record when no longer needed on
 	the client
 	- Delete the record if no longer needed in the
@@ -26,7 +26,7 @@ Scenario: Record
 
 	# The client creates a record
 	Given the client creates a record named "happyRecord"
-	Then the last message the server recieved is R|CR|happyRecord+
+	Then the last message the server received is R|CR|happyRecord+
 
 	# The server sends a read ACK message for happyRecord
 	Given the server sends the message R|A|S|happyRecord+
@@ -45,15 +45,15 @@ Scenario: Record
 
 	# The client sends an partial update
 	When the client sets the record "happyRecord" "pets.0.name" to "Max"
-	Then the last message the server recieved is R|P|happyRecord|103|pets.0.name|SMax+
+	Then the last message the server received is R|P|happyRecord|103|pets.0.name|SMax+
 
 	# The client receives another full update
 	When the client sets the record "happyRecord" to {"name":"Smith","pets":[{"name":"Ruffus","type":"dog","age":5}]}
-	Then the last message the server recieved is R|U|happyRecord|104|{"name":"Smith","pets":[{"name":"Ruffus","type":"dog","age":5}]}+
+	Then the last message the server received is R|U|happyRecord|104|{"name":"Smith","pets":[{"name":"Ruffus","type":"dog","age":5}]}+
 
 	# The client discards the record
 	When the client discards the record named "happyRecord"
-	Then the last message the server recieved is R|US|happyRecord+
+	Then the last message the server received is R|US|happyRecord+
 
 	# The server responds with a discard ACK
 	When the server sends the message R|A|US|happyRecord+
@@ -63,7 +63,7 @@ Scenario: Record
 		And the server sends the message R|A|S|happyRecord+
 		And the server sends the message R|R|happyRecord|100|{"name":"John", "pets": [{"name":"Ruffles", "type":"dog","age":2}]}+
 		And the client deletes the record named "happyRecord"
-	Then the last message the server recieved is R|D|happyRecord+
+	Then the last message the server received is R|D|happyRecord+
 
 	# The server responds with a delete ACK
 	When the server sends the message R|A|D|happyRecord+

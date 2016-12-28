@@ -22,5 +22,5 @@ Scenario: Requesting record multiple times
 		And the server sends the message R|A|S|doubleRecord+
 		And the server sends the message R|R|doubleRecord|100|{"name":"John", "pets": [{"name":"Ruffles", "type":"dog","age":2}]}+
 		And the client creates a record named "doubleRecord"
-	Then the last message the server recieved is R|CR|doubleRecord+
+	Then the last message the server received is R|CR|doubleRecord+
 		And the server has received 1 messages

@@ -2,7 +2,7 @@
 Feature: Events Connectivity
 	Events subscriptions must be resent to the
 	server after connection issues to guarantee
-	it continues recieving them correctly.
+	it continues receiving them correctly.
 
 	This applies to both subscribing to events
 	and listening to event subscriptions.
@@ -18,14 +18,14 @@ Scenario: Client loses connection
 
 	# The client subscribes to an event
 	Given the client subscribes to an event named "test1"
-	Then the last message the server recieved is E|S|test1+
+	Then the last message the server received is E|S|test1+
 
 	# The server sends an ACK message for test1
 	Given the server sends the message E|A|S|test1+
 
 	# The client listens to eventPrefix
 	When the client listens to events matching "eventPrefix/.*"
-	Then the last message the server recieved is E|L|eventPrefix/.*+
+	Then the last message the server received is E|L|eventPrefix/.*+
 
 	# The server sends an ACK message for eventPrefix
 	Given the server sends the message E|A|L|eventPrefix/.*+
@@ -38,7 +38,7 @@ Scenario: Client loses connection
 
 	# The client publishes an event
 	When the client publishes an event named "test1" with data "yetAnotherValue"
-	Then the server did not recieve any messages
+	Then the server did not receive any messages
 
 	# The client reconnects to the server
 	When the connection to the server is reestablished

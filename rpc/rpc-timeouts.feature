@@ -7,7 +7,7 @@ Feature: RPC Timeouts
 	that answers it (provider).
 
 	Whenever a provide or unprovide event does not
-	recieve an acknolowdgement from the server the
+	receive an acknolowdgement from the server the
 	client should emit an ack timeout error so
 	that the client can attempt to retry.
 
@@ -23,17 +23,17 @@ Scenario: RPC Timeouts
 
 	# The client makes an RPC
 	When the client requests RPC "toUppercase" with data "abc"
-	Then the last message the server recieved is P|REQ|toUppercase|<UID>|Sabc+
+	Then the last message the server received is P|REQ|toUppercase|<UID>|Sabc+
 
 	# The client receives a timeout
 	When some time passes
-	Then the client recieves an error RPC callback for "toUppercase" with the message "RESPONSE_TIMEOUT"
+	Then the client receives an error RPC callback for "toUppercase" with the message "RESPONSE_TIMEOUT"
 
 # Providing
 
 	# The client provides a RPC
 	When the client provides a RPC called "toUppercase"
-	Then the last message the server recieved is P|S|toUppercase+
+	Then the last message the server received is P|S|toUppercase+
 
 	# The server does not respond in time with a subscribe ACK
 	When some time passes
@@ -43,7 +43,7 @@ Scenario: RPC Timeouts
 
 	# The client stops providing a RPC
 	When the client stops providing a RPC called "toUppercase"
-	Then the last message the server recieved is P|US|toUppercase+
+	Then the last message the server received is P|US|toUppercase+
 
 	# The server does not respond in time with an unsubscribe ACK
 	When some time passes

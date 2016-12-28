@@ -7,7 +7,7 @@ Feature: Providing RPC
 	that answers it (provider).
 
 	The provider is responsible for notifying the
-	server that it is capable of recieving
+	server that it is capable of receiving
 	requests with a certain name.
 
 	These scenarios covers the provider, which is
@@ -34,7 +34,7 @@ Scenario: RPC Provider
 
 	# The client provides a RPC
 	When the client provides a RPC called "toUppercase"
-	Then the last message the server recieved is P|S|toUppercase+
+	Then the last message the server received is P|S|toUppercase+
 
 	# The client gets a subscribe ACK
  	When the server sends the message P|A|S|toUppercase+
@@ -45,12 +45,12 @@ Scenario: RPC Provider
  	When the server sends the message P|REQ|toUppercase|<UID>|Sabc+
 
 	# The client responds with an ack and processes message ( 1 )
-	Then the last message the server recieved is P|A|REQ|toUppercase|<UID>+
- 		And the client recieves a request for a RPC called "toUppercase" with data "abc"
+	Then the last message the server received is P|A|REQ|toUppercase|<UID>+
+ 		And the client receives a request for a RPC called "toUppercase" with data "abc"
 
 	# The client responds with a success
 	When the client responds to the RPC "toUppercase" with data "ABC"
- 	Then the last message the server recieved is P|RES|toUppercase|<UID>|SABC+
+ 	Then the last message the server received is P|RES|toUppercase|<UID>|SABC+
 
 # Error
 
@@ -58,12 +58,12 @@ Scenario: RPC Provider
  	When the server sends the message P|REQ|toUppercase|<UID>|Sabc+
 
 	# The client responds with an ack and processes message ( 2 )
-	Then the last message the server recieved is P|A|REQ|toUppercase|<UID>+
- 		And the client recieves a request for a RPC called "toUppercase" with data "abc"
+	Then the last message the server received is P|A|REQ|toUppercase|<UID>+
+ 		And the client receives a request for a RPC called "toUppercase" with data "abc"
 
 	# The client responds with an error
 	When the client responds to the RPC "toUppercase" with the error "An Error Occured"
- 	Then the last message the server recieved is P|E|An Error Occured|toUppercase|<UID>+
+ 	Then the last message the server received is P|E|An Error Occured|toUppercase|<UID>+
 
 # Rejection when supported
 
@@ -71,12 +71,12 @@ Scenario: RPC Provider
  	When the server sends the message P|REQ|toUppercase|<UID>|Sabc+
 
 	# The client responds with an ack and processes message ( 3 )
-	Then the last message the server recieved is P|A|REQ|toUppercase|<UID>+
- 		And the client recieves a request for a RPC called "toUppercase" with data "abc"
+	Then the last message the server received is P|A|REQ|toUppercase|<UID>+
+ 		And the client receives a request for a RPC called "toUppercase" with data "abc"
 
 	# The client responds with an explicit rejection
 	When the client rejects the RPC "toUppercase"
- 	Then the last message the server recieved is P|REJ|toUppercase|<UID>+
+ 	Then the last message the server received is P|REJ|toUppercase|<UID>+
 
 # Rejection when not supported
 
@@ -84,13 +84,13 @@ Scenario: RPC Provider
 	When the server sends the message P|REQ|unSupported|<UID>|Sabc+
 
 	# The client responds with an implicit rejection
-	Then the last message the server recieved is P|REJ|unSupported|<UID>+
+	Then the last message the server received is P|REJ|unSupported|<UID>+
 
 # Unproviding
 
 	# The client stops providing a RPC
 	When the client stops providing a RPC called "toUppercase"
-	Then the last message the server recieved is P|US|toUppercase+
+	Then the last message the server received is P|US|toUppercase+
 
 	# The client gets an unprovide ACK
  	When the server sends the message P|A|US|toUppercase+

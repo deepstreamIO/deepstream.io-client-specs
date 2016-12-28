@@ -2,7 +2,7 @@
 Feature: Presence Connectivity
 	Presence subscription must be sent to the server.
     after connection issues to guarantee
-	it continues recieving them correctly.
+	it continues receiving them correctly.
 
 Scenario: Client loses connection
 
@@ -27,7 +27,7 @@ Scenario: Client loses connection
 
 	# The client tries to query for connected clients
 	Given the client queries for connected clients
-	Then the server did not recieve any messages
+	Then the server did not receive any messages
 
 	# The client reconnects to the server
 	When the connection to the server is reestablished

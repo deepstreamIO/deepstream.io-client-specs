@@ -1,7 +1,7 @@
 @records
 Feature: Record Subscription
 	Record subscriptions is done purely on the
-	client side. Whenever an update is recieved
+	client side. Whenever an update is received
 	for a record, you should find out if anyone is
 	interested and then notify them. When
 	implementing, please keep in mind the
@@ -9,13 +9,13 @@ Feature: Record Subscription
 
 	Updates mean you should fully discard the data
 	that you had, and replace it with the data
-	recieved.
+	received.
 
 	Patch means you should apply the diff onto the
 	data you currently have.
 
 	From the clients callback perspective there
-	isn't really a difference when recieving
+	isn't really a difference when receiving
 	updates or patches, since the new data is
 	compared against the old and only the
 	differences are provided to the callback
@@ -30,7 +30,7 @@ Scenario: Record Subscription
 
 	# The client creates a record
 	When the client creates a record named "subscribeRecord"
-	Then the last message the server recieved is R|CR|subscribeRecord+
+	Then the last message the server received is R|CR|subscribeRecord+
 
 	# The server responds with an ack and the initial read
 	When the server sends the message R|A|S|subscribeRecord+

@@ -12,12 +12,12 @@ Feature: Record Timeouts
 	The timeouts are:
 
 	ACK_TIMEOUT
-		If the user does not recieve a timeout when
+		If the user does not receive a timeout when
 		initially requesting a record or discarding
 		it.
 
 	RESPONSE_TIMEOUT
-		If the user does not recieve the data in a
+		If the user does not receive the data in a
 		timely fashion.
 
 	DELETE_TIMEOUT
@@ -43,18 +43,18 @@ Scenario: Record Timeouts
 		And some time passes
 	Then the client throws a "ACK_TIMEOUT" error with message "unhappyRecord"
 
-	# The server does not recieve initial record data in time
+	# The server does not receive initial record data in time
  	When the server sends the message R|A|S|unhappyRecord+
  		And some time passes
  	# TODO: Should this use another error code?
  	Then the client throws a "RESPONSE_TIMEOUT" error with message "unhappyRecord"
 
-	# The server then recieves the initial record data
+	# The server then receives the initial record data
 	When the server sends the message R|R|unhappyRecord|100|{"reasons":["Because."]}+
 
 	# The client sends an partial update
 	When the client sets the record "unhappyRecord" to {"reasons":["Just Because."]}
-	Then the last message the server recieved is R|U|unhappyRecord|101|{"reasons":["Just Because."]}+
+	Then the last message the server received is R|U|unhappyRecord|101|{"reasons":["Just Because."]}+
 
 	# The server send a cache retrieval timeout
  	When the server sends the message R|E|CACHE_RETRIEVAL_TIMEOUT|unhappyRecord+
@@ -66,7 +66,7 @@ Scenario: Record Timeouts
 
 	# The client discards record
 	When the client discards the record named "unhappyRecord"
-	Then the last message the server recieved is R|US|unhappyRecord+
+	Then the last message the server received is R|US|unhappyRecord+
 
 	# The server does not respond in time with an unsubscribe ACK
 	When some time passes
@@ -77,8 +77,8 @@ Scenario: Record Timeouts
 		And the server sends the message R|A|S|unhappyRecord+
 		And the server sends the message R|R|unhappyRecord|100|{"reasons":["Because."]}+
 	When the client deletes the record named "unhappyRecord"
-	Then the last message the server recieved is R|D|unhappyRecord+
+	Then the last message the server received is R|D|unhappyRecord+
 
-	# The server does not recieve an ack
+	# The server does not receive an ack
 	When some time passes
 	Then the client throws a "DELETE_TIMEOUT" error with message "unhappyRecord"

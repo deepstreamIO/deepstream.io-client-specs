@@ -1,7 +1,7 @@
 @records @timeout
 Feature: Record Listen Timeouts
 	Whenever a listen subscribe or unsubscribe
-	event does not recieve an acknolowdgement from
+	event does not receive an acknolowdgement from
 	the server the client should emit an ack
 	timeout error so that the client can attempt
 	to retry.
@@ -16,7 +16,7 @@ Scenario: Record Listen Timeouts
 
 	# The client listens to recordPrefix
 	When the client listens to a record matching "recordPrefix/.*"
-	Then the last message the server recieved is R|L|recordPrefix/.*+
+	Then the last message the server received is R|L|recordPrefix/.*+
 
 	# The server does not respond in time with a listen ACK
 	When some time passes
@@ -24,7 +24,7 @@ Scenario: Record Listen Timeouts
 
 	# The client unlistens to recordPrefix
 	When the client unlistens to a record matching "recordPrefix/.*"
-	Then the last message the server recieved is R|UL|recordPrefix/.*+
+	Then the last message the server received is R|UL|recordPrefix/.*+
 
 	# The server does not respond in time with an unlisten ACK
 	#When some time passes

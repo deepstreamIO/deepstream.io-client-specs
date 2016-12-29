@@ -28,7 +28,7 @@ Scenario: Record Listen
 
 	# The client listens to recordPrefix
 	When the client listens to a record matching "recordPrefix/.*"
-	Then the last message the server recieved is R|L|recordPrefix/.*+
+	Then the last message the server received is R|L|recordPrefix/.*+
 
 	# The server responds with a listen ACK
 	Given the server sends the message R|A|L|recordPrefix/.*+
@@ -43,7 +43,7 @@ Scenario: Record Listen
 
 	# The client unlistens to recordPrefix
 	When the client unlistens to a record matching "recordPrefix/.*"
-	Then the last message the server recieved is R|UL|recordPrefix/.*+
+	Then the last message the server received is R|UL|recordPrefix/.*+
 
 	# The server responds with an unlisten ACK
 	Given the server sends the message R|A|UL|recordPrefix/.*+

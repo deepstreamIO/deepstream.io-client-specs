@@ -1,6 +1,6 @@
 @connectivity
 Feature: Redirecting a client to another deepstream
-	The client should be able to recieve a connection redirect
+	The client should be able to receive a connection redirect
 	to allow it to connect to a seperate deepstream url if needed
 
 Scenario: Redirecting a client to another deepstream
@@ -18,10 +18,10 @@ Scenario: Redirecting a client to another deepstream
 
 # The server challenges the client to show which url it wants to connect to
 	When the server sends the message C|CH+
-	Then the last message the server recieved is C|CHR|<FIRST_SERVER_URL>+
+	Then the last message the server received is C|CHR|<FIRST_SERVER_URL>+
 		And the clients connection state is "CHALLENGING"
 
-# The client attempts to connect to the other server when it recieves a redirect
+# The client attempts to connect to the other server when it receives a redirect
 	When the server sends the message C|RED|<SECOND_SERVER_URL>+
 	And the server has 0 active connections
 	When some time passes
@@ -30,12 +30,12 @@ Scenario: Redirecting a client to another deepstream
 		And the second server has 1 active connections
 		And the clients connection state is "AWAITING_CONNECTION"
 
-# The client changes to awaiting authentication when it recieves connection ack
+# The client changes to awaiting authentication when it receives connection ack
 	When the server sends the message C|A+
 
 # The client sends login credentials
 	When the client logs in with username "XXX" and password "YYY"
-	Then the last message the server recieved is A|REQ|{"username":"XXX","password":"YYY"}+
+	Then the last message the server received is A|REQ|{"username":"XXX","password":"YYY"}+
 		And the clients connection state is "AUTHENTICATING"
 
 # The client receives a login confirmation

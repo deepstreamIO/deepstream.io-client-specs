@@ -17,7 +17,7 @@ Scenario: Redirecting the client to another deepstream gets rejected
 
 # The server challenges the client to show which url it wants to connect to
 	When the server sends the message C|CH+
-	Then the last message the server recieved is C|CHR|<FIRST_SERVER_URL>+
+	Then the last message the server received is C|CHR|<FIRST_SERVER_URL>+
 		And the clients connection state is "CHALLENGING"
 
 # The client closes the connection if the challenge is rejected

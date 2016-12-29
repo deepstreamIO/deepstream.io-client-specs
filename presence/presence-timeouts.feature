@@ -1,7 +1,7 @@
 @presence @timeout
 Feature: Presence Timeouts
 	Whenever a subscribe or unsubscribe event does
-	not recieve an acknowledgement from the server
+	not receive an acknowledgement from the server
 	the client should emit an ack timeout error so
 	that the client can attempt to retry.
 

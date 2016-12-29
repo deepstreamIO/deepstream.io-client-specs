@@ -1,7 +1,7 @@
 @events @timeout
 Feature: Events Timeouts
 	Whenever a subscribe or unsubscribe event does
-	not recieve an acknolowdgement from the server
+	not receive an acknolowdgement from the server
 	the client should emit an ack timeout error so
 	that the client can attempt to retry.
 

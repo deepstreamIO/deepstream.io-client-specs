@@ -12,7 +12,7 @@ Scenario: The client logs in with valid authentication credentials
 		And the client is initialised
 		And the server sends the message C|A+
 	When the client logs in with username "XXX" and password "YYY"
-	Then the last message the server recieved is A|REQ|{"username":"XXX","password":"YYY"}+
+	Then the last message the server received is A|REQ|{"username":"XXX","password":"YYY"}+
 		And the clients connection state is "AUTHENTICATING"
 
 # The client receives a login confirmation

@@ -32,7 +32,11 @@ Scenario: Record write acknowledgement
 
 	Then the server sends the message R|WA|happyRecord|[101]|L+
 	Then the client is notified that the record "happyRecord" was written without error
-	
+
+	# The client sends same patch again and gets acknowledgement
+	When the client sets the record "happyRecord" "pets.0.name" to "Max"
+	Then the client is notified that the record "happyRecord" was written without error
+
 	# The client sends update and gets acknowledgement
 	When the client sets the record "happyRecord" to {"newData":"someValue"}
 	Then the last message the server recieved is R|U|happyRecord|102|{"newData":"someValue"}|{"writeSuccess":true}+

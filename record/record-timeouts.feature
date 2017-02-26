@@ -41,13 +41,13 @@ Scenario: Record Timeouts
 	# The server does not respond in time with a record ACK
 	When the client creates a record named "unhappyRecord"
 		And some time passes
-	Then the client throws a "ACK_TIMEOUT" error with message "unhappyRecord"
+	Then the client throws a "ACK_TIMEOUT" error with message "No ACK message received in time for unhappyRecord"
 
 	# The server does not recieve initial record data in time
  	When the server sends the message R|A|S|unhappyRecord+
  		And some time passes
  	# TODO: Should this use another error code?
- 	Then the client throws a "RESPONSE_TIMEOUT" error with message "unhappyRecord"
+ 	Then the client throws a "RESPONSE_TIMEOUT" error with message "No ACK message received in time for unhappyRecord"
 
 	# The server then recieves the initial record data
 	When the server sends the message R|R|unhappyRecord|100|{"reasons":["Because."]}+
@@ -70,7 +70,7 @@ Scenario: Record Timeouts
 
 	# The server does not respond in time with an unsubscribe ACK
 	When some time passes
-	Then the client throws a "ACK_TIMEOUT" error with message "unhappyRecord"
+	Then the client throws a "ACK_TIMEOUT" error with message "No ACK message received in time for unhappyRecord"
 
 	# The client deletes the record
 	Given the client creates a record named "unhappyRecord"
@@ -81,4 +81,4 @@ Scenario: Record Timeouts
 
 	# The server does not recieve an ack
 	When some time passes
-	Then the client throws a "DELETE_TIMEOUT" error with message "unhappyRecord"
+	Then the client throws a "DELETE_TIMEOUT" error with message "No ACK message received in time for unhappyRecord"

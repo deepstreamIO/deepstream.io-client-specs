@@ -32,7 +32,7 @@ Scenario: Record write acknowledgement
 
 	Then the server sends the message R|WA|happyRecord|[101]|L+
 	Then the client is notified that the record "happyRecord" was written without error
-	
+
 	# The client sends update and gets acknowledgement
 	When the client sets the record "happyRecord" to {"newData":"someValue"}
 	Then the last message the server recieved is R|U|happyRecord|102|{"newData":"someValue"}|{"writeSuccess":true}+
@@ -57,6 +57,6 @@ Scenario: Record write acknowledgement
 	When the client sets the record "happyRecord" "validData" to "someData"
 	Then the last message the server recieved is R|P|happyRecord|105|validData|SsomeData|{"writeSuccess":true}+
 	Then the server sends the message R|E|VERSION_EXISTS|happyRecord|105|{"validData":"newErrorData"}|{"writeSuccess":true}+
-	Then the last message the server recieved is R|U|happyRecord|106|{"validData":"newErrorData"}|{"writeSuccess":true}+
+	Then the last message the server recieved is R|P|happyRecord|105|validData|SsomeData|{"writeSuccess":true}+
 	Then the server sends the message R|WA|happyRecord|[106]|L+
 	Then the client is notified that the record "happyRecord" was written without error

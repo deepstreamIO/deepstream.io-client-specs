@@ -33,6 +33,10 @@ Scenario: Record write acknowledgement
 	Then the server sends the message R|WA|happyRecord|[101]|L+
 	Then the client is notified that the record "happyRecord" was written without error
 
+	# The client sends same patch again and gets acknowledgement
+	When the client sets the record "happyRecord" "pets.0.name" to "Max"
+	Then the client is notified that the record "happyRecord" was written without error
+
 	# The client sends update and gets acknowledgement
 	When the client sets the record "happyRecord" to {"newData":"someValue"}
 	Then the last message the server recieved is R|U|happyRecord|102|{"newData":"someValue"}|{"writeSuccess":true}+
@@ -60,3 +64,45 @@ Scenario: Record write acknowledgement
 	Then the last message the server recieved is R|P|happyRecord|105|validData|SsomeData|{"writeSuccess":true}+
 	Then the server sends the message R|WA|happyRecord|[106]|L+
 	Then the client is notified that the record "happyRecord" was written without error
+
+#Scenario: Record write acknowledgement edge cases
+
+	# The client loses it connection to the server
+	When the connection to the server is lost
+	Given two seconds later
+	Then the client throws a "connectionError" error with message "Can't connect! Deepstream server unreachable on ws://localhost:7777/deepstream"
+		And the clients connection state is "RECONNECTING"
+
+	# The client sends patch during offline
+	When the client sets the record "happyRecord" "pets.0.name" to "Max"
+	Then the client is notified that the record "happyRecord" was written with error "Connection error: error updating record as connection was closed"
+
+	# The client reconnects to the server
+	When the connection to the server is reestablished
+	And the server sends the message C|A+
+	Then the clients connection state is "AUTHENTICATING"
+
+	# The client successfully reconnects
+	Given the client logs in with username "XXX" and password "YYY"
+		And the server sends the message A|A+
+	Then the clients connection state is "OPEN"
+
+	# The client loses it connection to the server
+	When the connection to the server is lost
+	Given two seconds later
+	Then the client throws a "connectionError" error with message "Can't connect! Deepstream server unreachable on ws://localhost:7777/deepstream"
+		And the clients connection state is "RECONNECTING"
+
+	# The client sends same patch again
+	When the client sets the record "happyRecord" "pets.0.name" to "Max"
+	Then the client is notified that the record "happyRecord" was written with error "Connection error: error updating record as connection was closed"
+
+	# The client reconnects to the server
+	When the connection to the server is reestablished
+	And the server sends the message C|A+
+	Then the clients connection state is "AUTHENTICATING"
+
+	# The client successfully reconnects
+	Given the client logs in with username "XXX" and password "YYY"
+		And the server sends the message A|A+
+	Then the clients connection state is "OPEN"

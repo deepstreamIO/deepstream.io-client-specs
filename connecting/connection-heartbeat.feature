@@ -19,4 +19,4 @@ Scenario: Heartbeats
 
 	# The client receives an event
 	When two seconds later
-	Then the client throws a "connectionError" error with message "Two connections heartbeats missed successively"
+	Then the client throws a "connectionError" error with message "heartbeat not received in the last 1000 milliseconds"

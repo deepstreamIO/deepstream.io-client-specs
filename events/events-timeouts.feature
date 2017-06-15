@@ -22,6 +22,10 @@ Scenario: Events Timeouts
 	Then the client throws a "ACK_TIMEOUT" error with message "No ACK message received in time for test1"
 
 	# The client unsubscribes from an event
+	Given the client subscribes to an event named "test1"
+	Then the server received the message E|S|test1+
+	Given the server sends the message E|A|S|test1+
+
 	When the client unsubscribes from an event named "test1"
 	Then the server received the message E|US|test1+
 

@@ -24,6 +24,9 @@ Feature: Event Listen Timeouts
 		Then the client throws a "ACK_TIMEOUT" error with message "No ACK message received in time for eventPrefix/.*"
 
 	# The client unlistens to eventPrefix
+		When the client listens to events matching "eventPrefix/.*"
+		Then the last message the server recieved is E|L|eventPrefix/.*+
+		Given the server sends the message E|A|L|eventPrefix/.*+
 		When the client unlistens to events matching "eventPrefix/.*"
 		Then the last message the server recieved is E|UL|eventPrefix/.*+
 

@@ -1,0 +1,36 @@
+type,id,action,message,ack,direction,description,datatype
+auth,login,Login,A|REQ|loginData+,,Client,Sent to authenticate user,loginData: JSON object
+auth,loginsuccess,Login Success,A|A+,,Server,Received when login passes,
+auth,invalidlogin,Invalid Login,A|E|INVALID_AUTH_DATA|unknown user+,,Server,Received if login fails,
+auth,toomanyauthattempts,Too many login attempts,A|E|TOO_MANY_AUTH_ATTEMPTS+,,Server,Received if login fails more than the maximum allowed attempts and closes the client connection,
+event,listen,Listen,E|L|event\/.*+,E|A|L|event\/.*+,Client,Send when listening to event matching regex,
+event,unlisten,Unlisten,E|UL|event\/.*+,E|A|UL|event\/.*+,Client,Send when no longer interested in listening to event,
+event,subscribe,Subscribe,E|S|eventName+,E|A|S|eventName+,Client,Send to subscribe to event,
+event,unsubscribe,Unsubscribe,E|US|eventName+,E|A|US|eventName+,Client,Send to unsubscribe to event,
+event,publish,Publish,E|EVT|eventName|data+,E|A|EVT|eventName+,Client/Server,Received/Sent when an event occurs,data: Deepstream typed
+event,listenmatch,Listen Match,E|SP|event\/.*|event/A+,,Server,Received when a listened to regex is has a single intrested client,
+event,listenunmatch,Listen Unmatched,E|SR|event\/.*|event/A+,,,Received when a listened to regex no longer has any interested clients,
+record,listen,Listen,R|L|recordPrefix\/.*+,R|A|L|recordPrefix\/.*+,Client,,
+record,unlisten,Unlisten,R|UL|recordPrefix\/.*+,R|A|UL|recordPrefix\/.*+,Client,,
+record,listenmatch,Listen Match,R|SP|recordPrefix\/.*|/A+,,Server,Received when a listened to regex is matched,
+record,listenunmatch,Listen Unmatched,R|SR|RecordPrefix\/.*|recordPrefix/recordName+,,Server,Received when a listened to regex no longer has any interested clients,
+record,create,Read/Create,R|CR|recordName+,R|A|CR|recordName+,Client,"Send to request the record data, automatically subscribing to all changes and creates record if it does not exist",
+record,update,Update Entire Record,R|U|recordName|versionNumber|recordData+,,Client,Send/Received when the entire record data is replaced with a new value,recordData: JSON object
+record,patch,Patch Record,R|P|recordName|versionNumber|path|value+,,Client,Send/Received when the record is partially changed,value: Deepstream typed
+record,delete,Delete Record,R|D|recordName+,R|A|D|recordName+,Client,Send/Received when an object is deleted. This leads to all clients discarding the client since updates are no longer available,
+record,discard,Discard Record,R|US|recordName+,R|A|US|recordName+,Client,"Sent/Received when a record is discarded, unsubscribing the relevant client from updates relating to the given record.",
+record,receiveread,Receive Record Read,R|R|recordName|versionNumber|recordData,,Server,"When requesting a record you will get a read which is the current state of the record, similar to the update data",recordData: JSON object
+record,cachetimeout,Cache Read Timeout,R|E|CACHE_RETRIEVAL_TIMEOUT|recordName+,,Server,If the object can't be read from the cache within a certain time the server will respond with this error,
+record,databasetimeout,Database Read Timeout,R|E|STORAGE_RETRIEVAL_TIMEOUT|recordName+,,Server,If the object can't be read from storage within a certain time the server will respond with this error,
+rpc,register,Register as provider,P|S|rpcName+,P|A|S|rpcName+,Client,Send when client can receive RPC events,
+rpc,unregister,Unregister as provider,P|US|rpcName+,P|A|US|rpcName+,Client,Send when client no longer wishes to receive RPC events,
+rpc,send,Send RPC request,P|REQ|rpcName|rpcID|arguments+,P|A|REQ|rpcName|rpcID+,Client/Server,Send/Receive when RPC requested,arguments: Deepstream typed
+rpc,reject,Reject RPC request,P|REJ|rpcName|rpcID+,,Client,Send if client does not want to execute RPC,
+rpc,error,Error RPC request,P|E|ErrorMessage|rpcName|123+,,Client/Server,Send/Received if an error occurs while attempting to execute rpc,
+rpc,success,Respond to RPC request,P|RES|rpcName|rpcID|result+,,Client/Server,Send/Receive when RPC is executed succesfully with the resulting data,result: Deepstream typed
+presence,query,Query,U|Q|Q+,,Client,Sent to query for connected clients,
+presence,queryresponse,Query Response,U|Q|user1|user2+,,Server,Received when querying for connected clients,
+presence,subscribe,Presence subscribe,U|S|S+,U|A|S|U+,Client,Sent when subscribing to presence events,
+presence,unsubscribe,Presence unsubscribe,U|US|US+,U|A|US|U+,Client,Sent when unsubscribing to presence events,
+presence,join,Presence join,U|PNJ|username+,,Server,Sent when a user logs in,
+presence,join,Presence leave,U|PNL|username+,,Server,Sent when a user logs out,

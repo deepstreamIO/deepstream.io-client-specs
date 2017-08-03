@@ -1,4 +1,4 @@
-#Message Structure Overview
+# Message Structure Overview
 
 deepstream messages are transmitted using a proprietary, minimal, string-based protocol. Every message follows the same structure:
 

@@ -1,4 +1,4 @@
-# An overview over deepstream's internal Message Structure
+#Message Structure Overview
 
 deepstream messages are transmitted using a proprietary, minimal, string-based protocol. Every message follows the same structure:
 
@@ -19,8 +19,6 @@ userLisa = ds.record.getRecord( 'user/Lisa' );
 
 would prompt the client to send this message to the server
 
-![Message Structure Overview](message-structure-record-create.png)
-
 Messages always start with `topic` and `action`, but can contain an arbitrary amount of data fields afterwards.
 
 Setting the value of a path within the record for example
@@ -30,8 +28,6 @@ userLisa.set( 'lastname', 'Owen' );
 ```
 
 would result in this outgoing message
-
-![Message Structure Path](message-structure-record-patch.png)
 
 Please note the additional S before `Owen`. This indicates that the remaining part of the message should be treated as a string. Please find a list of available types [here](/docs/common/constants/#data-types).
 

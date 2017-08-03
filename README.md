@@ -1,6 +1,6 @@
 # deepstream.io-client-specs
 
-#### An overview over deepstream's internal Message Structure
+# An overview over deepstream's internal Message Structure
 
 deepstream messages are transmitted using a proprietary, minimal, string-based protocol. Every message follows the same structure:
 

@@ -13,11 +13,17 @@ Scenario: Client loses connection
 		And the client logs in with username "XXX" and password "YYY"
 		And the server sends the message A|A+
 
-	Given the client subscribes to presence events
+	Given the client subscribes to presence events for "userA,userB"
+    Then the server received the message U|S|1|["userA","userB"]+
+
+    # The server sends an ACK message for subscription
+    Given the server sends the message U|A|S|1+
+
+	Given the client subscribes to all presence events
     Then the server received the message U|S|S+
 
     # The server sends an ACK message for subscription
-    Given the server sends the message U|A|S|U+
+    Given the server sends the message U|A|S|S+
 
 	# The client loses its connection to the server
 	When the connection to the server is lost
@@ -27,6 +33,9 @@ Scenario: Client loses connection
 
 	# The client tries to query for connected clients
 	Given the client queries for connected clients
+	Then the server did not recieve any messages
+
+	Given the client queries if "userA,userB" are online
 	Then the server did not recieve any messages
 
 	# The client reconnects to the server
@@ -40,7 +49,9 @@ Scenario: Client loses connection
 	Then the clients connection state is "OPEN"
 
 	# The client resends the presence subscription
-	Then the server received the message U|S|S+
+	Then the server received the message U|S|3|["userA","userB"]+
+		And the server received the message U|S|S+
 
 	# The client resends the query
 	Then the server received the message U|Q|Q+
+		And the server received the message U|Q|2|["userA","userB"]+

@@ -36,3 +36,15 @@ Scenario: The client logs in with invalid credentials
 	When the client logs in with username "XXX" and password "ZZZ"
 		But the server sends the message A|E|TOO_MANY_AUTH_ATTEMPTS|Stoo many authentication attempts+
 	Then the last login failed with error message "too many authentication attempts"
+
+Scenario: The client tries to login when it is already authenticated
+
+	Given the client is initialised
+	  And the client logs in with username "XXX" and password "YYY"
+		And the server sends the message A|A+
+		And the last login was successful
+
+	When the client logs in with username "XXX" and password "YYY"
+		But the server sends the message A|E|ALREADY_AUTHENTICATED+
+	Then the client throws a "ALREADY_AUTHENTICATED" error with message "this client's connection is already authenticated"
+

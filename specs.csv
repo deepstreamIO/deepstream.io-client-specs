@@ -1,4 +1,8 @@
 type,id,action,message,ack,direction,description,datatype
+connection,challenge,Challenge,C|CH+,,Server,Received on connect
+connection,challenge,Challgenge Response,C|CHR+,,Client,Sent in response to challenge
+connection,ping,Ping,C|PI+,,Server,Received on heartbeat interval
+connection,ping,Pong,C|PO+,,Client,Sent in response to Ping
 auth,login,Login,A|REQ|loginData+,,Client,Sent to authenticate user,loginData: JSON object
 auth,loginsuccess,Login Success,A|A+,,Server,Received when login passes,
 auth,invalidlogin,Invalid Login,A|E|INVALID_AUTH_DATA|unknown user+,,Server,Received if login fails,
@@ -34,3 +38,4 @@ presence,subscribe,Presence subscribe,U|S|S+,U|A|S|U+,Client,Sent when subscribi
 presence,unsubscribe,Presence unsubscribe,U|US|US+,U|A|US|U+,Client,Sent when unsubscribing to presence events,
 presence,join,Presence join,U|PNJ|username+,,Server,Sent when a user logs in,
 presence,join,Presence leave,U|PNL|username+,,Server,Sent when a user logs out,
+
